@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben Mishal Bensam Sujin - Business Data Analyst</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f3f0; color: #333; }
+        .section-padding { padding: 4rem 0; }
+        .nav-link { @apply text-gray-600 hover:text-blue-600 font-medium transition-colors duration-200; }
+        .card { @apply bg-white rounded-lg shadow-md p-6; }
+        .skill-category { @apply font-semibold text-blue-700 mb-2; }
+        .skill-item { @apply bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors duration-200; }
+        .experience-item { @apply border-l-4 border-blue-500 pl-4 py-2 relative; }
+        .experience-item::before { content: ''; @apply absolute left-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full; }
+        .project-item { @apply bg-gray-50 p-4 rounded-md shadow-sm; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold text-blue-700">Ben Mishal B.S.</a>
+            <div class="space-x-6 hidden md:flex">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#ai-tools" class="nav-link">AI Tools</a>
+                <a href="#ask-questions" class="nav-link">Ask Questions</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none">
+                ☰
+            </button>
+        </div>
+    </nav>
+
+    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white flex items-center justify-center min-h-screen pt-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <img src="headshot.jpeg" alt="Ben Mishal B.S. Profile Picture" class="w-32 h-32 mx-auto rounded-full object-cover border-4 border-white shadow-lg">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3 leading-tight">Ben Mishal Bensam Sujin</h1>
+            <p class="text-xl md:text-2xl font-light mb-6 max-w-3xl mx-auto">
+                Business Data Analyst | Expert in Machine Learning, Financial Modeling, and Data Visualization | Driving Data-Driven Decision Making | MSc Business Analytics Problem Solver
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-lg">
+                <a href="mailto:benmishalben@gmail.com" class="bg-white text-blue-700 hover:bg-blue-100 px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    📧 Email Me
+                </a>
+                <a href="https://www.linkedin.com/in/ben-mishal-b-s-2bb928169/" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-700 hover:bg-blue-100 px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    🔗 LinkedIn Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">About Me</h2>
+            <div class="card">
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    As a highly motivated **Business Data Analyst** with over **3 years of impactful experience** and a **Master's in Business Analytics** from the University of Surrey, I excel at transforming complex data into actionable insights that drive significant business growth and operational efficiency. My expertise spans **machine learning, financial modeling, econometric analysis, and advanced data visualization**. I have a proven track record in optimizing business processes, developing robust financial models, and enhancing SAP systems. I am passionate about leveraging cutting-edge analytical and technical skills to inform strategic decision-making and deliver measurable results in dynamic environments.
+                </p>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Key Skills</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="skill-category">Analytics & Data Science:</p>
+                        <div class="flex flex-wrap gap-2" id="analytics-skills">
+                            <span class="skill-item">Python</span>
+                            <span class="skill-item">R</span>
+                            <span class="skill-item">SQL</span>
+                            <span class="skill-item">SAS Viya</span>
+                            <span class="skill-item">Stata</span>
+                            <span class="skill-item">Data Mining</span>
+                            <span class="skill-item">Predictive Modelling</span>
+                            <span class="skill-item">Machine Learning</span>
+                            <span class="skill-item">Econometric Analysis</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="skill-category">Business Intelligence:</p>
+                        <div class="flex flex-wrap gap-2" id="bi-skills">
+                            <span class="skill-item">Power BI</span>
+                            <span class="skill-item">Tableau</span>
+                            <span class="skill-item">SAP ERP</span>
+                            <span class="skill-item">Dashboard Development</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="skill-category">Software & Data Management:</p>
+                        <div class="flex flex-wrap gap-2" id="software-skills">
+                            <span class="skill-item">Java</span>
+                            <span class="skill-item">Git</span>
+                            <span class="skill-item">Agile Methodology</span>
+                            <span class="skill-item">Neo4j</span>
+                            <span class="skill-item">MATLAB</span>
+                            <span class="skill-item">AWS (In Progress)</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="skill-category">Business & Finance:</p>
+                        <div class="flex flex-wrap gap-2" id="finance-skills">
+                            <span class="skill-item">Financial Modelling</span>
+                            <span class="skill-item">Market Research</span>
+                            <span class="skill-item">Customer Segmentation</span>
+                            <span class="skill-item">Strategic Planning</span>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="skill-category">Communication:</p>
+                        <div class="flex flex-wrap gap-2" id="communication-skills">
+                            <span class="skill-item">Stakeholder Engagement</span>
+                            <span class="skill-item">Client Interaction</span>
+                            <span class="skill-item">Presentations</span>
+                            <span class="skill-item">Report Writing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Work Experience</h2>
+            <div class="space-y-8">
+                <div class="card experience-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Business Development Analyst</h3>
+                    <p class="text-blue-600">Step8Up Group, Camberley, England</p>
+                    <p class="text-sm text-gray-500 mb-2">Dec 2024 - Present</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Conducted market analysis to identify emerging trends, guiding leadership decisions with **actionable insights** and contributing to strategic business development initiatives.</li>
+                        <li>Tracked and analyzed sales metrics using **Excel and Power BI**, leading to **measurable improvements in outreach and conversion rates**.</li>
+                        <li>Collaborated cross-functionally to refine business processes, significantly **enhancing client targeting strategies and operational efficiency**.</li>
+                        <li>Optimized sales funnel tracking mechanisms, resulting in **quantifiable gains in conversion rates**.</li>
+                    </ul>
+                </div>
+                <div class="card experience-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Business Analyst (Volunteering)</h3>
+                    <p class="text-blue-600">Madras Kitchen, Camberley, England, United Kingdom</p>
+                    <p class="text-sm text-gray-500 mb-2">Dec 2023 - Dec 2024</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Supported the successful launch of a start-up restaurant from pre-registration through to operational setup, effectively balancing university commitments.</li>
+                        <li>Developed a **comprehensive business plan** outlining step-by-step strategies for start-up execution and sustainable growth.</li>
+                        <li>Conducted **in-depth market research and competitor analysis** to inform strategic pricing, precise target customer identification, and effective niche positioning.</li>
+                        <li>Analyzed customer demographics, income trends, and spending behaviors to **refine service offerings and optimize menu pricing strategies**, contributing to market fit.</li>
+                    </ul>
+                </div>
+                <div class="card experience-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Business Data Analyst Intern</h3>
+                    <p class="text-blue-600">Aluzie (ITEK Program), Guildford, Surrey, United Kingdom</p>
+                    <p class="text-sm text-gray-500 mb-2">Feb 2024 - Jul 2024</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Conducted **R&D on software code architecture** using **machine learning** to analyze and interpret complex system structures.</li>
+                        <li>Utilized **Neo4j and SQL** to model code relationships, generating **interactive visual insights through Power BI** for enhanced understanding.</li>
+                        <li>Developed a **machine learning model in Python** to map and explain complex code flows, significantly **aiding new developers in onboarding** and reducing ramp-up time.</li>
+                        <li>Created and presented a **strategic business plan** aimed at enhancing development efficiency and codebase comprehension.</li>
+                        <li>Awarded **"Innovative Collaborator"** for innovative contributions and impactful project outcomes during the internship.</li>
+                    </ul>
+                </div>
+                <div class="card experience-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Software Developer</h3>
+                    <p class="text-blue-600">Tata Consultancy Services, Chennai, India</p>
+                    <p class="text-sm text-gray-500 mb-2">Dec 2021 - May 2023</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Developed and implemented **critical code changes in Java** for NSDL (National Securities Depository Limited) as part of the settlement team, ensuring system integrity.</li>
+                        <li>Reviewed and executed software change requests, ensuring **100% compliance with functional requirements** and minimizing errors.</li>
+                        <li>Conducted **rigorous testing in multiple environments** to validate changes and ensure seamless system integration and performance.</li>
+                        <li>Prepared **comprehensive documentation**, including detailed change request records and release notes, to support efficient deployment and audit processes.</li>
+                    </ul>
+                </div>
+                <div class="card experience-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Analyst</h3>
+                    <p class="text-blue-600">NTT DATA, Chennai, India</p>
+                    <p class="text-sm text-gray-500 mb-2">Jul 2021 - Oct 2021</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Investigated **over 150 pending insurance claims** for a U.S.-based hospital by meticulously analyzing patient files and insurance records.</li>
+                        <li>Communicated effectively with U.S. insurance companies to **identify root causes for delayed or denied payments**, facilitating resolution.</li>
+                        <li>Provided **detailed updates and claim statuses** to assist claim processing teams in efficiently resolving outstanding issues.</li>
+                        <li>Ensured **accurate documentation and timely escalation** of claim-related concerns to accelerate reimbursement processes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section-padding bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Education</h2>
+            <div class="space-y-8">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900">Master of Science in Business Analytics</h3>
+                    <p class="text-blue-600">University of Surrey, Guildford, UK</p>
+                    <p class="text-sm text-gray-500 mb-2">Sep 2023 - Sep 2024</p>
+                    <p class="text-gray-700">Core Modules: Data Mining & Text Analytics, Principles of Analytics, Statistics & Econometrics, Operational Analytics, ML/AI & Visualizations, Financial Modelling, Data & BPM (SAP), Finance & Investment Principles.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900">Postgraduate Program in Management (PGPM)</h3>
+                    <p class="text-blue-600">Great Lakes Institute of Management, Gurgaon, India</p>
+                    <p class="text-sm text-gray-500 mb-2">Nov 2021 - Nov 2022</p>
+                    <p class="text-gray-700">Key Modules (Analytics Focus): Data Visualization using Tableau, Business Analytics using Python, Machine Learning and its Applications.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900">Bachelor of Technology in Mechanical Engineering</h3>
+                    <p class="text-blue-600">B.S. Abdur Rahman Crescent Institute of Science and Technology, Chennai, India</p>
+                    <p class="text-sm text-gray-500 mb-2">Jun 2017 - Jul 2021</p>
+                    <p class="text-gray-700">Core Modules: Engineering Mechanics, Thermodynamics, Fluid Mechanics, Solid Mechanics, Heat & Mass Transfer, Machine Design, Manufacturing Technology, Mechanical Measurements, CAD/CAM.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Key Projects & Achievements</h2>
+            <div class="space-y-6">
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Enhancing Sustainable Finance through GPU-Accelerated Value at Risk (VaR) Models in Central Banking</h3>
+                    <p class="text-gray-700 mt-2">Developed and implemented GPU-accelerated VaR models to significantly enhance the efficiency and speed of risk assessments for sustainable finance initiatives in central banking, demonstrating expertise in high-performance computing and financial analytics.</p>
+                </div>
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">SAP Systems Optimization Project with Decathlon</h3>
+                    <p class="text-gray-700 mt-2">Collaborated on an SAP systems project for Decathlon, focusing on optimizing business processes and data flow to improve operational efficiency and decision-making capabilities within a large retail environment.</p>
+                </div>
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Econometric Analysis for Market Insights (using Stata)</h3>
+                    <p class="text-gray-700 mt-2">Conducted in-depth econometric analysis using Stata to derive robust market insights and support strategic planning, showcasing strong statistical modeling and data interpretation skills.</p>
+                </div>
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Data Mining on UK Road Accident Dataset (using SAS Viya)</h3>
+                    <p class="text-gray-700 mt-2">Performed extensive data mining on a large UK Road Accident Dataset using SAS Viya, identifying critical patterns and factors contributing to accidents to inform safety strategies and policy recommendations.</p>
+                </div>
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Optimization of Rapid DNA Operation for Police Force</h3>
+                    <p class="text-gray-700 mt-2">Developed and implemented an optimization strategy for Rapid DNA operations, significantly improving efficiency and turnaround times for a police force, directly impacting investigative capabilities.</p>
+                </div>
+                <div class="project-item">
+                    <h3 class="text-xl font-semibold text-gray-900">Customer Interest Prediction for Caravan Insurance Policy</h3>
+                    <p class="text-gray-700 mt-2">Designed and implemented a predictive model to forecast customer interest in caravan insurance policies, enabling targeted marketing strategies and improved conversion rates for an insurance provider.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="section-padding bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Certifications & Awards</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900">Certifications</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 mt-2">
+                        <li>Agile Project Management (Foundation & Practitioner) - In Progress</li>
+                        <li>AWS Certified Cloud Practitioner - Expected 2025</li>
+                        <li>iTEK Training and Project Completion Certification - 2024</li>
+                        <li>Business English Certificate Preliminary - Cambridge Assessment English - 2024</li>
+                        <li>MATLAB Onramp Course - 2020</li>
+                        <li>Carbon Literacy Certificate - Sustainability Suite - 2025</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900">Awards</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 mt-2">
+                        <li>iTEK Innovative Collaborator Award</li>
+                        <li>iTEK One to Watch Award</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-tools" class="section-padding bg-gray-50">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">✨ AI-Powered Tools ✨</h2>
+            <p class="mb-8 text-gray-700 text-center">
+                Explore dynamic insights and validate your fit for roles using advanced AI capabilities.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">🎯 Role Alignment Analyzer</h3>
+                    <p class="text-gray-700 mb-4">
+                        Paste a job description below to receive an AI-powered assessment of how well your profile aligns with the role's requirements.
+                    </p>
+                    <textarea id="jobDescriptionInput" rows="8" placeholder="Paste the full job description here..." class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
+                    <button id="calculateMatchBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105 w-full">
+                        Calculate Match Score
+                    </button>
+                    <div id="matchOutput" class="mt-6 p-4 bg-purple-50 rounded-md text-gray-800 min-h-[100px] flex flex-col items-center justify-center text-center">
+                        <span id="matchPlaceholder" class="text-gray-600">Your match score and analysis will appear here.</span>
+                        <div id="matchLoading" class="hidden text-purple-600 mt-2">Analyzing...</div>
+                        <div id="matchScore" class="hidden text-5xl font-bold text-purple-800 mt-4"></div>
+                        <p id="matchExplanation" class="hidden text-lg text-gray-700 mt-2"></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">✨ Skill Explainer</h3>
+                    <p class="text-gray-700 mb-4">
+                        Click on any skill in the "About Me" section above to get an AI-powered explanation of its significance and application in a Business Data Analyst role.
+                    </p>
+                    <div id="skillExplanationOutput" class="p-3 bg-green-50 rounded-md text-gray-800 min-h-[100px] flex items-center justify-center text-center">
+                        <span id="skillExplanationPlaceholder">Click a skill to see its explanation.</span>
+                        <div id="skillExplanationLoading" class="hidden text-green-600">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ask-questions" class="section-padding bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Connect & Inquire</h2>
+            <p class="mb-8 text-gray-700 text-center">
+                I'm always open to discussing new projects, career opportunities, or collaborations. Feel free to send me any questions directly.
+            </p>
+
+            <div class="card">
+                <textarea id="questionInput" rows="8" placeholder="Type your question here..." class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
+                <button id="sendQuestionBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105 w-full">
+                    Send Question via Email
+                </button>
+                <div id="questionStatus" class="mt-4 text-center text-sm text-gray-600"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div class="container mx-auto px-4 text-center max-w-2xl">
+            <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
+            <p class="text-lg mb-8">
+                I'm always open to discussing new projects, opportunities, or collaborations. Feel free to reach out!
+            </p>
+            <div class="space-y-4 text-lg">
+                <p>📧 Email: <a href="mailto:benmishalben@gmail.com" class="underline hover:text-blue-200">benmishalben@gmail.com</a></p>
+                <p>📞 Phone: +44 7776426029</p>
+                <p>📍 Location: Surrey, United Kingdom</p>
+                <p>🔗 LinkedIn: <a href="https://www.linkedin.com/in/ben-mishal-b-s-2bb928169/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-200">linkedin.com/in/ben-mishal-b-s-2bb928169/</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-4 text-sm">
+        <p>&copy; 2024 Ben Mishal Bensam Sujin. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Consolidated Profile Data for LLM (used by AI tools)
+        const profileData = `
+            Professional Summary: Highly motivated professional with 3+ years of working experience and a Master's in Business Analytics to refine data-driven strategies and solutions. Demonstrates specialization in leveraging analytical skills to uncover insights and improve business decisions, mainly through machine learning and econometric models. Proven ability to tackle and enhance business processes across varied projects, such as developing financial models and optimizing SAP systems, demonstrating a keen aptitude for translating complex datasets into actionable business strategies. Seeking to apply advanced analytical and technical expertise to optimize business performance and inform strategic decision-making in a dynamic environment.
+
+            Key Skills:
+            Analytics & Data Science: Python, R, SQL, SAS Viya, Stata, Data Mining, Predictive Modelling, Machine Learning, Econometric Analysis
+            Business Intelligence: Power BI, Tableau, SAP ERP, Dashboard Development
+            Software & Data Management: Java, Git, Agile Methodology, Neo4j, MATLAB, AWS (In Progress)
+            Business & Finance: Financial Modelling, Market Research, Customer Segmentation, Strategic Planning
+            Communication: Stakeholder Engagement, Client Interaction, Presentations, Report Writing
+
+            Work Experience:
+            Business Development Analyst, Step8Up Group (Dec 2024-Present): Conducted market analysis to identify emerging trends, guiding leadership decisions with actionable insights and contributing to strategic business development initiatives. Tracked and analyzed sales metrics using Excel and Power BI, leading to measurable improvements in outreach and conversion rates. Collaborated cross-functionally to refine business processes, significantly enhancing client targeting strategies and operational efficiency. Optimized sales funnel tracking mechanisms, resulting in quantifiable gains in conversion rates.
+
+            Business Analyst (volunteering), Madras Kitchen (Dec 2023-Dec 2024): Supported the successful launch of a start-up restaurant from pre-registration through to operational setup, effectively balancing university commitments. Developed a comprehensive business plan outlining step-by-step strategies for start-up execution and sustainable growth. Conducted in-depth market research and competitor analysis to inform strategic pricing, precise target customer identification, and effective niche positioning. Analyzed customer demographics, income trends, and spending behaviours to refine service offerings and optimize menu pricing strategies, contributing to market fit.
+
+            Business Data Analyst Intern, Aluzie (ITEK Program) (Feb 2024-Jul 2024): Conducted R&D on software code architecture using machine learning to analyze and interpret complex system structures. Utilized Neo4j and SQL to model code relationships, generating interactive visual insights through Power BI for enhanced understanding. Developed a machine learning model in Python to map and explain complex code flows, significantly aiding new developers in onboarding and reducing ramp-up time. Created and presented a strategic business plan aimed at enhancing development efficiency and codebase comprehension. Awarded "Innovative Collaborator" for innovative contributions and impactful project outcomes during the internship.
+
+            Software Developer, Tata Consultancy Services (Dec 2021-May 2023): Developed and implemented critical code changes in Java for NSDL (National Securities Depository Limited) as part of the settlement team, ensuring system integrity. Reviewed and executed software change requests, ensuring 100% compliance with functional requirements and minimizing errors. Conducted rigorous testing in multiple environments to validate changes and ensure seamless system integration and performance. Prepared comprehensive documentation, including detailed change request records and release notes, to support efficient deployment and audit processes.
+
+            Analyst, NTT DATA (Jul 2021-Oct 2021): Investigated over 150 pending insurance claims for a U.S.-based hospital by meticulously analyzing patient files and insurance records. Communicated effectively with U.S. insurance companies to identify root causes for delayed or denied payments, facilitating resolution. Provided detailed updates and claim statuses to assist claim processing teams in efficiently resolving outstanding issues. Ensured accurate documentation and timely escalation of claim-related concerns to accelerate reimbursement processes.
+
+            Education:
+            Master of Science in Business Analytics, University of Surrey (Sep 2023-Sep 2024): Core Modules: Data Mining & Text Analytics, Principles of Analytics, Statistics & Econometrics, Operational Analytics, ML/AI & Visualizations, Financial Modelling, Data & BPM (SAP), Finance & Investment Principles.
+
+            Postgraduate Program in Management (PGPM), Great Lakes Institute of Management (Nov 2021-Nov 2022): Key Modules (Analytics Focus): Data Visualization using Tableau, Business Analytics using Python, Machine Learning and its Applications.
+
+            Bachelor of Technology in Mechanical Engineering, B.S. Abdur Rahman Crescent Institute of Science and Technology, Chennai, India (Jun 2017-Jul 2021): Core Modules: Engineering Mechanics, Thermodynamics, Fluid Mechanics, Solid Mechanics, Heat & Mass Transfer, Machine Design, Manufacturing Technology, Mechanical Measurements, CAD/CAM.
+
+            Projects: Enhancing Sustainable Finance through GPU-Accelerated Value at Risk (VaR) Models in Central Banking, SAP Systems Project with Decathlon, Econometric Analysis using Stata, Data Mining on UK Road Accident Dataset using SAS Viya, Optimization of Rapid DNA Operation for Police Force, Customer Interest Prediction for Caravan Insurance Policy.
+
+            Certifications & Awards: Agile Project Management (Foundation & Practitioner) - In Progress, AWS Certified Cloud Practitioner - Expected 2025, iTEK Training and Project Completion Certification - 2024, Business English Certificate Preliminary - Cambridge Assessment English - 2024, MATLAB Onramp Course - 2020, Carbon Literacy Certificate - Sustainability Suite - 2025, iTEK Innovative Collaborator Award, iTEK One to Watch Award.
+        `;
+
+
+        // Collect all skills from the About Me section for the Skill Explainer
+        const allSkills = [];
+        document.querySelectorAll('.skill-item').forEach(skillSpan => {
+            allSkills.push(skillSpan.textContent.trim());
+        });
+        const allSkillsString = allSkills.join(', ');
+
+        // Job Matcher elements
+        const jobDescriptionInput = document.getElementById('jobDescriptionInput');
+        const calculateMatchBtn = document.getElementById('calculateMatchBtn');
+        const matchOutput = document.getElementById('matchOutput');
+        const matchPlaceholder = document.getElementById('matchPlaceholder');
+        const matchLoading = document.getElementById('matchLoading');
+        const matchScoreDisplay = document.getElementById('matchScore');
+        const matchExplanationDisplay = document.getElementById('matchExplanation');
+
+        // Skill Explainer elements
+        const skillExplanationOutput = document.getElementById('skillExplanationOutput');
+        const skillExplanationPlaceholder = document.getElementById('skillExplanationPlaceholder');
+        const skillExplanationLoading = document.getElementById('skillExplanationLoading');
+        const skillContainers = document.querySelectorAll('#analytics-skills, #bi-skills, #software-skills, #finance-skills, #communication-skills');
+
+        // Ask Questions elements
+        const questionInput = document.getElementById('questionInput');
+        const sendQuestionBtn = document.getElementById('sendQuestionBtn');
+        const questionStatus = document.getElementById('questionStatus');
+
+        // Function to call Gemini API for Job Matcher
+        calculateMatchBtn.addEventListener('click', async () => {
+            const jobDescription = jobDescriptionInput.value.trim();
+            if (!jobDescription) {
+                matchOutput.innerHTML = '<span class="text-red-500">Please paste a job description to calculate the match.</span>';
+                return;
+            }
+
+            matchPlaceholder.classList.add('hidden');
+            matchScoreDisplay.classList.add('hidden');
+            matchExplanationDisplay.classList.add('hidden');
+            matchLoading.classList.remove('hidden');
+            matchOutput.classList.remove('bg-purple-50'); // Remove initial background
+            matchOutput.classList.add('bg-purple-100'); // Add loading background
+
+            const prompt = `As an experienced HR professional, evaluate the matching score (out of 100) between the provided candidate profile and the job description. Provide the score as a number, followed by a brief, concise explanation (2-3 sentences) highlighting key strengths and areas for improvement.
+
+            Candidate Profile:
+            ${profileData}
+
+            Job Description:
+            ${jobDescription}
+
+            Format your response as:
+            Score: [SCORE]/100
+            Analysis: [EXPLANATION]`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""; // Canvas will provide this at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const responseText = result.candidates[0].content.parts[0].text;
+                    const scoreMatch = responseText.match(/Score: (\d+)\/100/);
+                    const analysisMatch = responseText.match(/Analysis: (.*)/s);
+
+                    if (scoreMatch && analysisMatch) {
+                        matchScoreDisplay.textContent = `${scoreMatch[1]}/100`;
+                        matchExplanationDisplay.textContent = analysisMatch[1].trim();
+                        matchScoreDisplay.classList.remove('hidden');
+                        matchExplanationDisplay.classList.remove('hidden');
+                        matchOutput.classList.remove('bg-purple-100');
+                        matchOutput.classList.add('bg-purple-50');
+                    } else {
+                        matchOutput.innerHTML = '<span class="text-red-500">Could not parse AI response. Please try again.</span>';
+                        matchOutput.classList.remove('bg-purple-100');
+                        matchOutput.classList.add('bg-red-50');
+                    }
+                } else {
+                    matchOutput.innerHTML = '<span class="text-red-500">Could not calculate match. Please try again.</span>';
+                    matchOutput.classList.remove('bg-purple-100');
+                    matchOutput.classList.add('bg-red-50');
+                }
+            } catch (error) {
+                console.error('Error calculating job match:', error);
+                matchOutput.innerHTML = '<span class="text-red-500">Error calculating match. Please try again later.</span>';
+                matchOutput.classList.remove('bg-purple-100');
+                matchOutput.classList.add('bg-red-50');
+            } finally {
+                matchLoading.classList.add('hidden');
+            }
+        });
+
+        // Function to call Gemini API for Skill Explainer
+        skillContainers.forEach(container => {
+            container.addEventListener('click', async (event) => {
+                if (event.target.classList.contains('skill-item')) {
+                    const skillName = event.target.textContent.trim();
+                    skillExplanationOutput.innerHTML = ''; // Clear previous output
+                    skillExplanationPlaceholder.classList.add('hidden');
+                    skillExplanationLoading.classList.remove('hidden');
+
+                    const prompt = `Explain the significance of "${skillName}" for a Business Data Analyst. Be concise (2-3 sentences).`;
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // Canvas will provide this at runtime
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+                        if (result.candidates && result.candidates.length > 0 &&
+                            result.candidates[0].content && result.candidates[0].content.parts &&
+                            result.candidates[0].content.parts.length > 0) {
+                            skillExplanationOutput.textContent = result.candidates[0].content.parts[0].text;
+                        } else {
+                            skillExplanationOutput.textContent = 'Could not explain skill. Please try again.';
+                        }
+                    } catch (error) {
+                        console.error('Error explaining skill:', error);
+                        skillExplanationOutput.textContent = 'Error explaining skill. Please try again later.';
+                    } finally {
+                        skillExplanationLoading.classList.add('hidden');
+                        if (skillExplanationOutput.innerHTML === '') {
+                            skillExplanationPlaceholder.classList.remove('hidden');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Function to handle "Send Question" button click
+        sendQuestionBtn.addEventListener('click', () => {
+            const questionText = questionInput.value.trim();
+            if (questionText) {
+                const recipientEmail = 'benmishalben@gmail.com'; // Your Gmail ID
+                const subject = encodeURIComponent('Question from your Portfolio Website');
+                const body = encodeURIComponent(`Hello Ben,\n\nI have a question from your portfolio website:\n\n${questionText}\n\n`);
+                
+                const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+                window.location.href = mailtoLink;
+                questionStatus.textContent = 'Opening your email client...';
+                questionInput.value = ''; // Clear the textarea
+            } else {
+                questionStatus.textContent = 'Please type your question before sending.';
+            }
+        });
+    </script>
+</body>
+</html>
