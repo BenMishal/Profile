@@ -351,6 +351,11 @@
     </footer>
 
     <script>
+        // Helper function to convert Markdown bold (**) to HTML strong tags
+        function markdownToHtmlBold(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -362,6 +367,7 @@
         });
 
         // Consolidated Profile Data for LLM (used by AI tools)
+        // Markdown is now included in this string, but will be converted before display if needed
         const profileData = `
             Professional Summary: Highly motivated professional with 3+ years of working experience and a Master's in Business Analytics to refine data-driven strategies and solutions. Demonstrates specialization in leveraging analytical skills to uncover insights and improve business decisions, mainly through machine learning and econometric models. Proven ability to tackle and enhance business processes across varied projects, such as developing financial models and optimizing SAP systems, demonstrating a keen aptitude for translating complex datasets into actionable business strategies. Seeking to apply advanced analytical and technical expertise to optimize business performance and inform strategic decision-making in a dynamic environment.
 
@@ -472,13 +478,13 @@
 
                     if (scoreMatch && analysisMatch) {
                         matchScoreDisplay.textContent = `${scoreMatch[1]}/100`;
-                        matchExplanationDisplay.textContent = analysisMatch[1].trim();
+                        matchExplanationDisplay.innerHTML = markdownToHtmlBold(analysisMatch[1].trim()); // Convert Markdown to HTML
                         matchScoreDisplay.classList.remove('hidden');
                         matchExplanationDisplay.classList.remove('hidden');
                         matchOutput.classList.remove('bg-purple-100');
                         matchOutput.classList.add('bg-purple-50');
                     } else {
-                        matchOutput.innerHTML = '<span class="text-red-500">Could not parse AI response. Please try again.</span>';
+                        matchOutput.innerHTML = '<span class="text-red-500">Could not parse AI response. Please try again. Ensure AI response is in specified format.</span>';
                         matchOutput.classList.remove('bg-purple-100');
                         matchOutput.classList.add('bg-red-50');
                     }
@@ -489,7 +495,7 @@
                 }
             } catch (error) {
                 console.error('Error calculating job match:', error);
-                matchOutput.innerHTML = '<span class="text-red-500">Error calculating match. Please try again later.</span>';
+                matchOutput.innerHTML = '<span class="text-red-500">Error calculating match. Please check your API key and browser console for details.</span>';
                 matchOutput.classList.remove('bg-purple-100');
                 matchOutput.classList.add('bg-red-50');
             } finally {
