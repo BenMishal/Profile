@@ -14,10 +14,42 @@
         .nav-link { @apply text-gray-600 hover:text-blue-600 font-medium transition-colors duration-200; }
         .card { @apply bg-white rounded-lg shadow-md p-6; }
         .skill-category { @apply font-semibold text-blue-700 mb-2; }
-        .skill-item { @apply bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full cursor-pointer hover:bg-blue-200 transition-colors duration-200; }
+        /* Enhanced skill item styling for a 'pop-out' effect */
+        .skill-item { 
+            @apply bg-blue-50 text-blue-800 text-sm font-medium px-3 py-1 rounded-full 
+                   cursor-pointer transition-all duration-200 
+                   border border-blue-200 shadow-sm; 
+        }
+        .skill-item:hover {
+            @apply bg-blue-200 shadow-md; /* Stronger shadow on hover */
+        }
         .experience-item { @apply border-l-4 border-blue-500 pl-4 py-2 relative; }
         .experience-item::before { content: ''; @apply absolute left-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full; }
         .project-item { @apply bg-gray-50 p-4 rounded-md shadow-sm; }
+
+        /* Styling for the clickable skill category header */
+        .skill-category-header {
+            @apply flex justify-between items-center cursor-pointer p-2 rounded-md transition-colors duration-200;
+            background-color: #e0f2fe; /* Light blue background for headers */
+            border: 1px solid #90cdf4;
+        }
+        .skill-category-header:hover {
+            background-color: #bfdbfe; /* Slightly darker on hover */
+        }
+        .skill-category-header .arrow-icon {
+            transition: transform 0.2s ease-in-out;
+        }
+        .skill-category-header.expanded .arrow-icon {
+            transform: rotate(90deg);
+        }
+        /* Initial state for skill content */
+        .skill-list-content {
+            display: none; /* Hidden by default */
+            margin-top: 0.75rem; /* Space below header */
+        }
+        .skill-list-content.visible {
+            display: flex; /* Display as flex when visible */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -66,58 +98,111 @@
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">About Me</h2>
             <div class="card">
                 <p id="about-me-summary" class="text-lg text-gray-700 leading-relaxed mb-6"></p>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Key Skills</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Core Competencies & Key Skills</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div>
-                        <p class="skill-category">Analytics & Data Science:</p>
-                        <div class="flex flex-wrap gap-2" id="analytics-skills">
+                        <div class="skill-category-header" data-target="business-skills-list">
+                            <p class="skill-category !mb-0">Business Analysis & Strategy</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="business-skills-list">
+                            <span class="skill-item">Requirements Gathering</span>
+                            <span class="skill-item">Process Mapping</span>
+                            <span class="skill-item">Gap Analysis</span>
+                            <span class="skill-item">Feasibility Studies</span>
+                            <span class="skill-item">Business Process Modeling</span>
+                            <span class="skill-item">User Stories</span>
+                            <span class="skill-item">Stakeholder Management</span>
+                            <span class="skill-item">Strategic Planning</span>
+                            <span class="skill-item">Market Research</span>
+                            <span class="skill-item">Customer Segmentation</span>
+                            <span class="skill-item">Financial Modeling</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="skill-category-header" data-target="data-science-skills-list">
+                            <p class="skill-category !mb-0">Data Science & Analytics</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="data-science-skills-list">
                             <span class="skill-item">Python</span>
                             <span class="skill-item">R</span>
                             <span class="skill-item">SQL</span>
                             <span class="skill-item">SAS Viya</span>
                             <span class="skill-item">Stata</span>
                             <span class="skill-item">Data Mining</span>
-                            <span class="skill-item">Predictive Modelling</span>
+                            <span class="skill-item">Predictive Modeling</span>
                             <span class="skill-item">Machine Learning</span>
+                            <span class="skill-item">Deep Learning</span>
+                            <span class="skill-item">NLP</span>
+                            <span class="skill-item">Computer Vision</span>
                             <span class="skill-item">Econometric Analysis</span>
+                            <span class="skill-item">Statistical Modeling</span>
+                            <span class="skill-item">Feature Engineering</span>
+                            <span class="skill-item">A/B Testing</span>
+                            <span class="skill-item">Experiment Design</span>
                         </div>
                     </div>
                     <div>
-                        <p class="skill-category">Business Intelligence:</p>
-                        <div class="flex flex-wrap gap-2" id="bi-skills">
+                        <div class="skill-category-header" data-target="bi-tools-skills-list">
+                            <p class="skill-category !mb-0">Business Intelligence & Tools</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="bi-tools-skills-list">
                             <span class="skill-item">Power BI</span>
                             <span class="skill-item">Tableau</span>
-                            <span class="skill-item">SAP ERP</span>
                             <span class="skill-item">Dashboard Development</span>
+                            <span class="skill-item">SAP ERP</span>
+                            <span class="skill-item">Excel (Advanced)</span>
                         </div>
                     </div>
                     <div>
-                        <p class="skill-category">Software & Data Management:</p>
-                        <div class="flex flex-wrap gap-2" id="software-skills">
+                        <div class="skill-category-header" data-target="software-skills-list">
+                            <p class="skill-category !mb-0">Software & Data Engineering</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="software-skills-list">
                             <span class="skill-item">Java</span>
                             <span class="skill-item">Git</span>
-                            <span class="skill-item">Agile Methodology</span>
                             <span class="skill-item">Neo4j</span>
                             <span class="skill-item">MATLAB</span>
                             <span class="skill-item">AWS (In Progress)</span>
+                            <span class="skill-item">Big Data Technologies (e.g., Spark, Hadoop)</span>
+                            <span class="skill-item">Data Warehousing</span>
                         </div>
                     </div>
                     <div>
-                        <p class="skill-category">Business & Finance:</p>
-                        <div class="flex flex-wrap gap-2" id="finance-skills">
-                            <span class="skill-item">Financial Modelling</span>
-                            <span class="skill-item">Market Research</span>
-                            <span class="skill-item">Customer Segmentation</span>
-                            <span class="skill-item">Strategic Planning</span>
+                        <div class="skill-category-header" data-target="project-risk-skills-list">
+                            <p class="skill-category !mb-0">Project & Risk Management</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="project-risk-skills-list">
+                            <span class="skill-item">Agile Methodologies</span>
+                            <span class="skill-item">Scrum</span>
+                            <span class="skill-item">Kanban</span>
+                            <span class="skill-item">Project Planning</span>
+                            <span class="skill-item">Budget Management</span>
+                            <span class="skill-item">Resource Allocation</span>
+                            <span class="skill-item">Gantt Charts</span>
+                            <span class="skill-item">Risk Assessment</span>
+                            <span class="skill-item">Risk Mitigation</span>
+                            <span class="skill-item">Compliance</span>
+                            <span class="skill-item">Regulatory Frameworks</span>
+                            <span class="skill-item">Operational Risk</span>
+                            <span class="skill-item">Cybersecurity Risk</span>
                         </div>
                     </div>
-                    <div class="md:col-span-2">
-                        <p class="skill-category">Communication:</p>
-                        <div class="flex flex-wrap gap-2" id="communication-skills">
+                    <div>
+                        <div class="skill-category-header" data-target="communication-skills-list">
+                            <p class="skill-category !mb-0">Communication & Collaboration</p>
+                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
+                        </div>
+                        <div class="skill-list-content flex flex-wrap gap-2" id="communication-skills-list">
                             <span class="skill-item">Stakeholder Engagement</span>
                             <span class="skill-item">Client Interaction</span>
                             <span class="skill-item">Presentations</span>
                             <span class="skill-item">Report Writing</span>
+                            <span class="skill-item">Cross-functional Collaboration</span>
                         </div>
                     </div>
                 </div>
@@ -381,11 +466,12 @@
             Professional Summary: Highly motivated professional with 3+ years of working experience and a Master's in Business Analytics to refine data-driven strategies and solutions. Demonstrates specialization in leveraging analytical skills to uncover insights and improve business decisions, mainly through machine learning and econometric models. Proven ability to tackle and enhance business processes across varied projects, such as developing financial models and optimizing SAP systems, demonstrating a keen aptitude for translating complex datasets into actionable business strategies. Seeking to apply advanced analytical and technical expertise to optimize business performance and inform strategic decision-making in a dynamic environment.
 
             Key Skills:
-            Analytics & Data Science: Python, R, SQL, SAS Viya, Stata, Data Mining, Predictive Modelling, Machine Learning, Econometric Analysis
-            Business Intelligence: Power BI, Tableau, SAP ERP, Dashboard Development
-            Software & Data Management: Java, Git, Agile Methodology, Neo4j, MATLAB, AWS (In Progress)
-            Business & Finance: Financial Modelling, Market Research, Customer Segmentation, Strategic Planning
-            Communication: Stakeholder Engagement, Client Interaction, Presentations, Report Writing
+            Business Analysis & Strategy: Requirements Gathering, Process Mapping, Gap Analysis, Feasibility Studies, Business Process Modeling, User Stories, Stakeholder Management, Strategic Planning, Market Research, Customer Segmentation, Financial Modeling
+            Data Science & Analytics: Python, R, SQL, SAS Viya, Stata, Data Mining, Predictive Modeling, Machine Learning, Deep Learning, NLP, Computer Vision, Econometric Analysis, Statistical Modeling, Feature Engineering, A/B Testing, Experiment Design
+            Business Intelligence & Tools: Power BI, Tableau, Dashboard Development, SAP ERP, Excel (Advanced)
+            Software & Data Engineering: Java, Git, Neo4j, MATLAB, AWS (In Progress), Big Data Technologies (e.g., Spark, Hadoop), Data Warehousing
+            Project & Risk Management: Agile Methodologies, Scrum, Kanban, Project Planning, Budget Management, Resource Allocation, Gantt Charts, Risk Assessment, Risk Mitigation, Compliance, Regulatory Frameworks, Operational Risk, Cybersecurity Risk
+            Communication & Collaboration: Stakeholder Engagement, Client Interaction, Presentations, Report Writing, Cross-functional Collaboration
 
             Work Experience:
             Business Development Analyst, Step8Up Group (Dec 2024-Present): Conducted market analysis to identify emerging trends, guiding leadership decisions with actionable insights and contributing to strategic business development initiatives. Tracked and analyzed sales metrics using Excel and Power BI, leading to measurable improvements in outreach and conversion rates. Collaborated cross-functionally to refine business processes, significantly enhancing client targeting strategies and operational efficiency. Optimized sales funnel tracking mechanisms, resulting in quantifiable gains in conversion rates.
@@ -413,10 +499,13 @@
 
         // Collect all skills from the About Me section for the Skill Explainer
         const allSkills = [];
+        // Updated to select all elements with skill-item class, regardless of parent ID
         document.querySelectorAll('.skill-item').forEach(skillSpan => {
             allSkills.push(skillSpan.textContent.trim());
         });
-        const allSkillsString = allSkills.join(', ');
+        // We no longer need allSkillsString for the skill explainer prompt as it uses the clicked skill
+        // But it's kept here as it might be used by other features later.
+        const allSkillsString = allSkills.join(', '); 
 
         // Job Matcher elements
         const jobDescriptionInput = document.getElementById('jobDescriptionInput');
@@ -431,7 +520,9 @@
         const skillExplanationOutput = document.getElementById('skillExplanationOutput');
         const skillExplanationPlaceholder = document.getElementById('skillExplanationPlaceholder');
         const skillExplanationLoading = document.getElementById('skillExplanationLoading');
-        const skillContainers = document.querySelectorAll('#analytics-skills, #bi-skills, #software-skills, #finance-skills, #communication-skills');
+        // Updated to select all skill containers based on their category IDs
+        const skillContainers = document.querySelectorAll('#business-skills-list, #data-science-skills-list, #bi-tools-skills-list, #software-skills-list, #project-risk-skills-list, #communication-skills-list');
+
 
         // Ask Questions elements
         const questionInput = document.getElementById('questionInput');
@@ -477,7 +568,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                const result = await response.json();
+
+                if (!response.ok) { // Check if the response was successful (HTTP 200-299)
+                    const errorBody = await response.text(); // Read response as text for debugging
+                    throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
+                }
+
+                const result = await response.json(); // This is where the original error occurred if response was not JSON
+                
                 if (result.candidates && result.candidates.length > 0 &&
                     result.candidates[0].content && result.candidates[0].content.parts &&
                     result.candidates[0].content.parts.length > 0) {
@@ -504,7 +602,7 @@
                 }
             } catch (error) {
                 console.error('Error calculating job match:', error);
-                matchOutput.innerHTML = '<span class="text-red-500">Error calculating match. Please check your API key and browser console for details.</span>';
+                matchOutput.innerHTML = `<span class="text-red-500">Error calculating match: ${error.message}. Please check your API key and browser console for details.</span>`;
                 matchOutput.classList.remove('bg-purple-100');
                 matchOutput.classList.add('bg-red-50');
             } finally {
@@ -534,6 +632,12 @@
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
+
+                        if (!response.ok) { // Check if the response was successful (HTTP 200-299)
+                            const errorBody = await response.text(); // Read response as text for debugging
+                            throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
+                        }
+
                         const result = await response.json();
                         if (result.candidates && result.candidates.length > 0 &&
                             result.candidates[0].content && result.candidates[0].content.parts &&
@@ -544,7 +648,7 @@
                         }
                     } catch (error) {
                         console.error('Error explaining skill:', error);
-                        skillExplanationOutput.textContent = 'Error explaining skill. Please try again later.';
+                        skillExplanationOutput.textContent = `Error explaining skill: ${error.message}. Please try again later.`;
                     } finally {
                         skillExplanationLoading.classList.add('hidden');
                         if (skillExplanationOutput.innerHTML === '') {
