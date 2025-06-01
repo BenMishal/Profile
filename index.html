@@ -66,7 +66,7 @@
                 <a href="#education" class="nav-link">Education</a>
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#certifications" class="nav-link">Certifications</a>
-                <a href="#ai-tools" class="nav-link">AI Tools</a>
+                <a href="#client-tools" class="nav-link">Client Tools</a>
                 <a href="#ask-questions" class="nav-link">Ask Questions</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -361,18 +361,18 @@
         </div>
     </section>
 
-    <section id="ai-tools" class="section-padding bg-gray-50">
+    <section id="client-tools" class="section-padding bg-gray-50">
         <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">✨ AI-Powered Tools ✨</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">🛠️ Client-Side Tools 🛠️</h2>
             <p class="mb-8 text-gray-700 text-center">
-                Explore dynamic insights and validate your fit for roles using advanced AI capabilities.
+                Explore dynamic insights and validate your fit for roles using built-in analytical tools. No external APIs needed!
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="card">
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">🎯 Role Alignment Analyzer</h3>
                     <p class="text-gray-700 mb-4">
-                        Paste a job description below to receive an AI-powered assessment of how well your profile aligns with the role's requirements.
+                        Paste a job description below to receive an assessment of how well your profile aligns with the role's requirements based on keyword matching.
                     </p>
                     <textarea id="jobDescriptionInput" rows="8" placeholder="Paste the full job description here..." class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
                     <button id="calculateMatchBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105 w-full">
@@ -387,9 +387,9 @@
                 </div>
 
                 <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">✨ Skill Explainer</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">💡 Skill Explainer</h3>
                     <p class="text-gray-700 mb-4">
-                        Click on any skill in the "About Me" section above to get an AI-powered explanation of its significance and application in a Business Data Analyst role.
+                        Click on any skill in the "About Me" section above to get a quick explanation of its significance and application in a Business Data Analyst role.
                     </p>
                     <div id="skillExplanationOutput" class="p-3 bg-green-50 rounded-md text-gray-800 min-h-[100px] flex items-center justify-center text-center">
                         <span id="skillExplanationPlaceholder">Click a skill to see its explanation.</span>
@@ -463,8 +463,7 @@
         document.addEventListener('DOMContentLoaded', setAboutMeSummary);
 
 
-        // Consolidated Profile Data for LLM (used by AI tools)
-        // Markdown is now included in this string, but will be converted before display if needed
+        // Consolidated Profile Data for NON-AI tools
         const profileData = `
             Professional Summary: Highly motivated professional with 3+ years of working experience and a Master's in Business Analytics to refine data-driven strategies and solutions. Demonstrates specialization in leveraging analytical skills to uncover insights and improve business decisions, mainly through machine learning and econometric models. Proven ability to tackle and enhance business processes across varied projects, such as developing financial models and optimizing SAP systems, demonstrating a keen aptitude for translating complex datasets into actionable business strategies. Seeking to apply advanced analytical and technical expertise to optimize business performance and inform strategic decision-making in a dynamic environment.
 
@@ -500,16 +499,6 @@
         `;
 
 
-        // Collect all skills from the About Me section for the Skill Explainer
-        const allSkills = [];
-        // Updated to select all elements with skill-item class, regardless of parent ID
-        document.querySelectorAll('.skill-item').forEach(skillSpan => {
-            allSkills.push(skillSpan.textContent.trim());
-        });
-        // We no longer need allSkillsString for the skill explainer prompt as it uses the clicked skill
-        // But it's kept here as it might be used by other features later.
-        const allSkillsString = allSkills.join(', '); 
-
         // Job Matcher elements
         const jobDescriptionInput = document.getElementById('jobDescriptionInput');
         const calculateMatchBtn = document.getElementById('calculateMatchBtn');
@@ -523,70 +512,9 @@
         const skillExplanationOutput = document.getElementById('skillExplanationOutput');
         const skillExplanationPlaceholder = document.getElementById('skillExplanationPlaceholder');
         const skillExplanationLoading = document.getElementById('skillExplanationLoading');
-        // Updated to select all skill containers based on their category IDs
         const skillCategoryHeaders = document.querySelectorAll('.skill-category-header');
 
-
-        // Ask Questions elements
-        const questionInput = document.getElementById('questionInput');
-        const sendQuestionBtn = document.getElementById('sendQuestionBtn');
-        const questionStatus = document.getElementById('questionStatus');
-
-        // Function to call Gemini API for Job Matcher
-        calculateMatchBtn.addEventListener('click', async () => {
-            const jobDescription = jobDescriptionInput.value.trim();
-            if (!jobDescription) {
-                matchOutput.innerHTML = '<span class="text-red-500">Please paste a job description to calculate the match.</span>';
-                return;
-            }
-
-            matchPlaceholder.classList.add('hidden');
-            matchScoreDisplay.classList.add('hidden');
-            matchExplanationDisplay.classList.add('hidden');
-            matchLoading.classList.remove('hidden');
-            matchOutput.classList.remove('bg-purple-50'); // Remove initial background
-            matchOutput.classList.add('bg-purple-100'); // Add loading background
-
-            // --- START NON-AI JOB MATCHER LOGIC ---
-            const profileKeywords = profileData.toLowerCase().match(/\b\w+(?:-\w+)*\b/g) || []; // Extract words
-            const jobKeywords = jobDescription.toLowerCase().match(/\b\w+(?:-\w+)*\b/g) || [];
-
-            const uniqueProfileKeywords = new Set(profileKeywords);
-            const uniqueJobKeywords = new Set(jobKeywords);
-
-            let matchedKeywordsCount = 0;
-            uniqueJobKeywords.forEach(jobWord => {
-                if (uniqueProfileKeywords.has(jobWord)) {
-                    matchedKeywordsCount++;
-                }
-            });
-
-            const totalJobKeywords = uniqueJobKeywords.size;
-            const matchPercentage = totalJobKeywords > 0 ? Math.round((matchedKeywordsCount / totalJobKeywords) * 100) : 0;
-
-            let analysisText = "";
-            if (matchPercentage >= 80) {
-                analysisText = "This is an **excellent match**! Your profile strongly aligns with the job description's requirements. Highlight your relevant experiences and skills in your application.";
-            } else if (matchPercentage >= 60) {
-                analysisText = "This is a **good match**. Many of your skills and experiences are relevant. Focus on emphasizing the aligned areas and demonstrating how your background can address any gaps.";
-            } else if (matchPercentage >= 40) {
-                analysisText = "This is a **moderate match**. Some key areas align, but there might be significant gaps. Consider tailoring your application to highlight transferable skills and express strong interest in learning.";
-            } else {
-                analysisText = "This is a **limited match**. While some keywords align, your profile may not be a strong fit for this particular role. Focus on transferable skills if you choose to apply.";
-            }
-
-            matchScoreDisplay.textContent = `${matchPercentage}/100`;
-            matchExplanationDisplay.innerHTML = markdownToHtmlBold(analysisText);
-            matchScoreDisplay.classList.remove('hidden');
-            matchExplanationDisplay.classList.remove('hidden');
-            matchOutput.classList.remove('bg-purple-100');
-            matchOutput.classList.add('bg-purple-50');
-            // --- END NON-AI JOB MATCHER LOGIC ---
-
-            matchLoading.classList.add('hidden'); // Ensure loading is hidden regardless of path
-        });
-
-        // Skill Explanations (Static Data)
+        // Skill Explanations (Static Data) - Expanded for more skills
         const skillExplanations = {
             "Requirements Gathering": "The foundational process of collecting and documenting the precise needs and expectations of stakeholders for a project, ensuring all critical functionalities and constraints are understood.",
             "Process Mapping": "Visualizing workflows and operational sequences to understand current states, identify bottlenecks, and design optimized future processes for improved efficiency and clarity.",
