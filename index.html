@@ -47,10 +47,11 @@
         /* Initial state for skill content */
         .skill-list-content {
             display: none !important; /* Hidden by default, with !important for specificity */
-            /* Removed margin-top here as it's now handled by header's margin-bottom */
         }
         .skill-list-content.visible {
             display: flex !important; /* Display as flex when visible, with !important for specificity */
+            flex-wrap: wrap; /* Added flex-wrap here */
+            gap: 0.5rem; /* Added gap here */
         }
     </style>
 </head>
@@ -107,7 +108,7 @@
                             <p class="skill-category !mb-0">Business Analysis & Strategy</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="business-skills-list">
+                        <div class="skill-list-content" id="business-skills-list">
                             <span class="skill-item">Requirements Gathering</span>
                             <span class="skill-item">Process Mapping</span>
                             <span class="skill-item">Gap Analysis</span>
@@ -126,7 +127,7 @@
                             <p class="skill-category !mb-0">Data Science & Analytics</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="data-science-skills-list">
+                        <div class="skill-list-content" id="data-science-skills-list">
                             <span class="skill-item">Python</span>
                             <span class="skill-item">R</span>
                             <span class="skill-item">SQL</span>
@@ -150,7 +151,7 @@
                             <p class="skill-category !mb-0">Business Intelligence & Tools</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="bi-tools-skills-list">
+                        <div class="skill-list-content" id="bi-tools-skills-list">
                             <span class="skill-item">Power BI</span>
                             <span class="skill-item">Tableau</span>
                             <span class="skill-item">Dashboard Development</span>
@@ -163,7 +164,7 @@
                             <p class="skill-category !mb-0">Software & Data Engineering</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="software-skills-list">
+                        <div class="skill-list-content" id="software-skills-list">
                             <span class="skill-item">Java</span>
                             <span class="skill-item">Git</span>
                             <span class="skill-item">Neo4j</span>
@@ -178,7 +179,7 @@
                             <p class="skill-category !mb-0">Project & Risk Management</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="project-risk-skills-list">
+                        <div class="skill-list-content" id="project-risk-skills-list">
                             <span class="skill-item">Agile Methodologies</span>
                             <span class="skill-item">Scrum</span>
                             <span class="skill-item">Kanban</span>
@@ -199,7 +200,7 @@
                             <p class="skill-category !mb-0">Communication & Collaboration</p>
                             <span class="arrow-icon text-blue-700 text-xl">▶</span>
                         </div>
-                        <div class="skill-list-content flex flex-wrap gap-2" id="communication-skills-list">
+                        <div class="skill-list-content" id="communication-skills-list">
                             <span class="skill-item">Stakeholder Engagement</span>
                             <span class="skill-item">Client Interaction</span>
                             <span class="skill-item">Presentations</span>
@@ -546,73 +547,107 @@
             matchOutput.classList.remove('bg-purple-50'); // Remove initial background
             matchOutput.classList.add('bg-purple-100'); // Add loading background
 
-            const prompt = `As an experienced HR professional, evaluate the matching score (out of 100) between the provided candidate profile and the job description. Provide the score as a number, followed by a brief, concise explanation (2-3 sentences) highlighting key strengths and areas for improvement.
+            // --- START NON-AI JOB MATCHER LOGIC ---
+            const profileKeywords = profileData.toLowerCase().match(/\b\w+(?:-\w+)*\b/g) || []; // Extract words
+            const jobKeywords = jobDescription.toLowerCase().match(/\b\w+(?:-\w+)*\b/g) || [];
 
-            Candidate Profile:
-            ${profileData}
+            const uniqueProfileKeywords = new Set(profileKeywords);
+            const uniqueJobKeywords = new Set(jobKeywords);
 
-            Job Description:
-            ${jobDescription}
-
-            Format your response as:
-            Score: [SCORE]/100
-            Analysis: [EXPLANATION]`;
-
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiKey = ""; // Canvas will provide this at runtime
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) { // Check if the response was successful (HTTP 200-299)
-                    const errorBody = await response.text(); // Read response as text for debugging
-                    throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
+            let matchedKeywordsCount = 0;
+            uniqueJobKeywords.forEach(jobWord => {
+                if (uniqueProfileKeywords.has(jobWord)) {
+                    matchedKeywordsCount++;
                 }
+            });
 
-                const result = await response.json(); // This is where the original error occurred if response was not JSON
-                
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const responseText = result.candidates[0].content.parts[0].text;
-                    const scoreMatch = responseText.match(/Score: (\d+)\/100/);
-                    const analysisMatch = responseText.match(/Analysis: (.*)/s);
+            const totalJobKeywords = uniqueJobKeywords.size;
+            const matchPercentage = totalJobKeywords > 0 ? Math.round((matchedKeywordsCount / totalJobKeywords) * 100) : 0;
 
-                    if (scoreMatch && analysisMatch) {
-                        matchScoreDisplay.textContent = `${scoreMatch[1]}/100`;
-                        matchExplanationDisplay.innerHTML = markdownToHtmlBold(analysisMatch[1].trim()); // Convert Markdown to HTML
-                        matchScoreDisplay.classList.remove('hidden');
-                        matchExplanationDisplay.classList.remove('hidden');
-                        matchOutput.classList.remove('bg-purple-100');
-                        matchOutput.classList.add('bg-purple-50');
-                    } else {
-                        matchOutput.innerHTML = '<span class="text-red-500">Could not parse AI response. Please try again. Ensure AI response is in specified format.</span>';
-                        matchOutput.classList.remove('bg-purple-100');
-                        matchOutput.classList.add('bg-red-50');
-                    }
-                } else {
-                    matchOutput.innerHTML = '<span class="text-red-500">Could not calculate match. Please try again.</span>';
-                    matchOutput.classList.remove('bg-purple-100');
-                    matchOutput.classList.add('bg-red-50');
-                }
-            } catch (error) {
-                console.error('Error calculating job match:', error);
-                matchOutput.innerHTML = `<span class="text-red-500">Error calculating match: ${error.message}. Please check your API key and browser console for details.</span>`;
-                matchOutput.classList.remove('bg-purple-100');
-                matchOutput.classList.add('bg-red-50');
-            } finally {
-                matchLoading.classList.add('hidden');
+            let analysisText = "";
+            if (matchPercentage >= 80) {
+                analysisText = "This is an **excellent match**! Your profile strongly aligns with the job description's requirements. Highlight your relevant experiences and skills in your application.";
+            } else if (matchPercentage >= 60) {
+                analysisText = "This is a **good match**. Many of your skills and experiences are relevant. Focus on emphasizing the aligned areas and demonstrating how your background can address any gaps.";
+            } else if (matchPercentage >= 40) {
+                analysisText = "This is a **moderate match**. Some key areas align, but there might be significant gaps. Consider tailoring your application to highlight transferable skills and express strong interest in learning.";
+            } else {
+                analysisText = "This is a **limited match**. While some keywords align, your profile may not be a strong fit for this particular role. Focus on transferable skills if you choose to apply.";
             }
+
+            matchScoreDisplay.textContent = `${matchPercentage}/100`;
+            matchExplanationDisplay.innerHTML = markdownToHtmlBold(analysisText);
+            matchScoreDisplay.classList.remove('hidden');
+            matchExplanationDisplay.classList.remove('hidden');
+            matchOutput.classList.remove('bg-purple-100');
+            matchOutput.classList.add('bg-purple-50');
+            // --- END NON-AI JOB MATCHER LOGIC ---
+
+            matchLoading.classList.add('hidden'); // Ensure loading is hidden regardless of path
         });
 
-        // Function to call Gemini API for Skill Explainer
+        // Skill Explanations (Static Data)
+        const skillExplanations = {
+            "Requirements Gathering": "The foundational process of collecting and documenting the precise needs and expectations of stakeholders for a project, ensuring all critical functionalities and constraints are understood.",
+            "Process Mapping": "Visualizing workflows and operational sequences to understand current states, identify bottlenecks, and design optimized future processes for improved efficiency and clarity.",
+            "Gap Analysis": "A systematic method for comparing actual performance or capabilities with desired performance to identify deficiencies and areas requiring improvement or development.",
+            "Feasibility Studies": "An evaluation of a proposed project or system to determine its practicality, viability, and potential for success, considering technical, economic, legal, and operational factors.",
+            "Business Process Modeling": "Representing business processes in a standardized graphical notation (e.g., BPMN) to facilitate analysis, communication, and improvement of organizational workflows.",
+            "User Stories": "Short, simple descriptions of a feature told from the perspective of the person who desires the new capability, used in Agile methodologies to define system functionality.",
+            "Stakeholder Management": "The process of identifying, analyzing, and engaging with all individuals or groups who have an interest or influence in a project, ensuring their needs and expectations are managed effectively.",
+            "Strategic Planning": "The organizational process of defining its strategy, or direction, and making decisions on allocating its resources to pursue this strategy, including its capital and people.",
+            "Market Research": "The systematic gathering, recording, and analysis of data about customers, competitors, and the market to inform business decisions and identify opportunities.",
+            "Customer Segmentation": "The practice of dividing a customer base into groups of individuals that are similar in specific ways relevant to marketing, service, or product development.",
+            "Financial Modeling": "The process of creating a summary of a company's expenses and earnings, typically in a spreadsheet, to forecast its future financial performance under different scenarios.",
+            "Python": "A high-level, versatile programming language widely used in data analysis, machine learning, web development, and automation due to its readability and extensive libraries.",
+            "R": "A programming language and free software environment specifically designed for statistical computing and graphics, popular in academia and research for data analysis and visualization.",
+            "SQL": "Structured Query Language, a standard language for managing and manipulating data in relational database management systems, essential for data extraction and transformation.",
+            "SAS Viya": "A cloud-enabled, in-memory analytics engine that provides a comprehensive platform for data management, advanced analytics, AI, and business intelligence.",
+            "Stata": "A comprehensive statistical software package used for data analysis, data management, and generating professional-quality graphics, particularly strong in econometrics and biostatistics.",
+            "Data Mining": "The process of discovering patterns, anomalies, and correlations within large datasets to predict outcomes and extract valuable insights for business decision-making.",
+            "Predictive Modeling": "Utilizing statistical and machine learning techniques to forecast future outcomes or probabilities based on historical data, enabling proactive decision-making.",
+            "Machine Learning": "A field of artificial intelligence that enables systems to learn from data, identify patterns, and make decisions with minimal human intervention, foundational for advanced analytics.",
+            "Deep Learning": "A subset of machine learning that uses artificial neural networks with multiple layers (deep neural networks) to learn complex patterns from large amounts of data, particularly effective for image and speech recognition.",
+            "NLP": "Natural Language Processing, a branch of AI that enables computers to understand, interpret, and generate human language, crucial for text analysis, sentiment analysis, and chatbots.",
+            "Computer Vision": "A field of artificial intelligence that trains computers to interpret and understand the visual world from digital images or videos, used in facial recognition, object detection, and autonomous systems.",
+            "Econometric Analysis": "The application of statistical methods to economic data to give empirical content to economic relations, test hypotheses, and forecast economic trends.",
+            "Statistical Modeling": "The use of mathematical equations to represent relationships between variables, allowing for the prediction of outcomes and understanding of data structures.",
+            "Feature Engineering": "The process of transforming raw data into features that better represent the underlying problem to predictive models, significantly impacting model performance.",
+            "A/B Testing": "A method of comparing two versions of a webpage, app feature, or marketing campaign against each other to determine which one performs better in achieving a specific goal.",
+            "Experiment Design": "The process of planning experiments to test hypotheses and draw valid conclusions, ensuring reliability and statistical significance of results.",
+            "Power BI": "A business intelligence tool from Microsoft that provides interactive visualizations and business intelligence capabilities with an easy-to-use interface for end-users.",
+            "Tableau": "A powerful data visualization tool widely used for creating interactive and shareable dashboards, enabling users to see and understand data quickly.",
+            "Dashboard Development": "The design and creation of interactive visual displays that track, analyze, and present key performance indicators (KPIs), metrics, and data points to monitor the health of a business area.",
+            "SAP ERP": "Enterprise Resource Planning software from SAP, a leading provider of business software solutions that manage business operations and customer relations.",
+            "Excel (Advanced)": "Proficiency in advanced Microsoft Excel functions, including complex formulas, pivot tables, macros (VBA), and data analysis tools for sophisticated data manipulation and reporting.",
+            "Java": "A high-level, class-based, object-oriented programming language widely used for enterprise-level applications, Android development, and large-scale systems.",
+            "Git": "A distributed version control system used for tracking changes in source code during software development, facilitating collaboration among multiple developers.",
+            "Neo4j": "A leading graph database management system, used for storing, querying, and visualizing highly connected data, ideal for relationship analysis.",
+            "MATLAB": "A proprietary multi-paradigm programming language and numerical computing environment, often used for mathematical modeling, simulation, and data analysis in engineering and scientific fields.",
+            "AWS (In Progress)": "Familiarity with Amazon Web Services, a comprehensive cloud computing platform, with ongoing efforts to achieve certification, indicating a commitment to cloud expertise.",
+            "Big Data Technologies (e.g., Spark, Hadoop)": "Knowledge of frameworks and tools designed to process and analyze extremely large datasets that cannot be handled by traditional data processing applications.",
+            "Data Warehousing": "The process of constructing and using a data warehouse, a system used for reporting and data analysis, and is a core component of business intelligence.",
+            "Agile Methodologies": "An iterative and incremental approach to project management and software development, emphasizing flexibility, collaboration, and continuous improvement.",
+            "Scrum": "A lightweight Agile framework for managing complex adaptive problems, while productively and creatively delivering products of the highest possible value.",
+            "Kanban": "An Agile method for managing and improving work in human systems, emphasizing continuous delivery and minimizing work-in-progress.",
+            "Project Planning": "The process of defining project goals, scope, tasks, resources, and timelines, and creating a detailed roadmap for project execution.",
+            "Budget Management": "The process of planning, tracking, and controlling project expenditures to ensure financial resources are used efficiently and within allocated limits.",
+            "Resource Allocation": "The process of assigning and scheduling resources (e.g., people, equipment, materials) to tasks and activities to maximize efficiency and achieve project objectives.",
+            "Gantt Charts": "A type of bar chart that illustrates a project schedule, showing the start and finish dates of the terminal elements and summary elements of a project.",
+            "Risk Assessment": "The process of identifying potential risks that could negatively affect a project or business, analyzing their likelihood and impact, and prioritizing them.",
+            "Risk Mitigation": "Developing and implementing strategies and actions to reduce the impact or likelihood of identified risks, ensuring project stability and success.",
+            "Compliance": "Adhering to rules, standards, laws, and regulations relevant to a specific industry or business operation.",
+            "Regulatory Frameworks": "Understanding the structured set of rules, laws, and administrative procedures that govern an industry or activity, ensuring legal and ethical operations.",
+            "Operational Risk": "The risk of loss resulting from inadequate or failed internal processes, people and systems, or from external events, focusing on day-to-day business activities.",
+            "Cybersecurity Risk": "The potential for loss or harm related to technical infrastructure, data breaches, system failures, or cyberattacks, requiring robust protective measures.",
+            "Stakeholder Engagement": "The process by which an organization involves people who may be affected by the decisions it makes or can influence the implementation of its decisions, fostering positive relationships.",
+            "Client Interaction": "The act of communicating and building relationships with clients to understand their needs, provide solutions, and ensure satisfaction and loyalty.",
+            "Presentations": "The skill of delivering information effectively and engagingly to an audience, often involving visual aids and strong verbal communication.",
+            "Report Writing": "The ability to create clear, concise, and informative documents that convey complex findings, analyses, and recommendations to various audiences.",
+            "Cross-functional Collaboration": "The ability to work effectively and cooperatively with teams and individuals from different departments, disciplines, or areas of expertise to achieve common goals."
+        };
+
+        // Function to call Gemini API for Skill Explainer (now uses static data)
         skillCategoryHeaders.forEach(header => { // Loop through headers
             header.addEventListener('click', (event) => {
                 const targetId = header.dataset.target;
@@ -625,6 +660,23 @@
             });
         });
 
+        // Event listener for individual skill items to show explanations (now uses static data)
+        document.querySelectorAll('.skill-item').forEach(skillItem => {
+            skillItem.addEventListener('click', (event) => {
+                const skillName = event.target.textContent.trim();
+                const explanation = skillExplanations[skillName];
+
+                skillExplanationOutput.innerHTML = ''; // Clear previous output
+                skillExplanationPlaceholder.classList.add('hidden');
+                skillExplanationLoading.classList.add('hidden'); // Ensure loading is hidden
+
+                if (explanation) {
+                    skillExplanationOutput.textContent = explanation;
+                } else {
+                    skillExplanationOutput.textContent = `No detailed explanation available for "${skillName}".`;
+                }
+            });
+        });
 
         // Function to handle "Send Question" button click
         sendQuestionBtn.addEventListener('click', () => {
