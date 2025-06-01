@@ -32,23 +32,25 @@
             @apply flex justify-between items-center cursor-pointer p-2 rounded-md transition-colors duration-200;
             background-color: #e0f2fe; /* Light blue background for headers */
             border: 1px solid #90cdf4;
+            margin-bottom: 0.5rem; /* Space between header and list */
         }
         .skill-category-header:hover {
             background-color: #bfdbfe; /* Slightly darker on hover */
         }
         .skill-category-header .arrow-icon {
             transition: transform 0.2s ease-in-out;
+            display: inline-block; /* Crucial for transform to work reliably */
         }
         .skill-category-header.expanded .arrow-icon {
             transform: rotate(90deg);
         }
         /* Initial state for skill content */
         .skill-list-content {
-            display: none; /* Hidden by default */
-            margin-top: 0.75rem; /* Space below header */
+            display: none !important; /* Hidden by default, with !important for specificity */
+            /* Removed margin-top here as it's now handled by header's margin-bottom */
         }
         .skill-list-content.visible {
-            display: flex; /* Display as flex when visible */
+            display: flex !important; /* Display as flex when visible, with !important for specificity */
         }
     </style>
 </head>
@@ -452,7 +454,7 @@
         // This function will be called on page load to set the About Me summary
         function setAboutMeSummary() {
             const aboutMeSummaryElement = document.getElementById('about-me-summary');
-            const summaryText = `As a highly motivated **Business Data Analyst** with over **3 years of impactful experience** and a **Master's in Business Analytics** from the University of Surrey, I excel at transforming complex data into actionable insights that drive significant business growth and operational efficiency. My expertise spans **machine learning, financial modeling, econometric analysis, and advanced data visualization**. I have a proven track record in optimizing business processes, developing robust financial models, and enhancing SAP systems. I am passionate about leveraging cutting-edge analytical and technical skills to inform strategic decision-making and deliver measurable results in dynamic environments.`;
+            const summaryText = `As a highly motivated **Business Data Analyst** with over **3 years of impactful experience** and a **Master's in Business Analytics** from the University of Surrey, I excel at transforming complex data into actionable insights that drive significant business growth and operational efficiency. My expertise spans **machine learning, financial modeling, econometric analysis, and advanced data visualization**. I have a proven record in optimizing business processes, developing robust financial models, and enhancing SAP systems. I am passionate about leveraging cutting-edge analytical and technical skills to inform strategic decision-making and deliver measurable results in dynamic environments.`;
             aboutMeSummaryElement.innerHTML = markdownToHtmlBold(summaryText);
         }
 
@@ -521,7 +523,7 @@
         const skillExplanationPlaceholder = document.getElementById('skillExplanationPlaceholder');
         const skillExplanationLoading = document.getElementById('skillExplanationLoading');
         // Updated to select all skill containers based on their category IDs
-        const skillContainers = document.querySelectorAll('#business-skills-list, #data-science-skills-list, #bi-tools-skills-list, #software-skills-list, #project-risk-skills-list, #communication-skills-list');
+        const skillCategoryHeaders = document.querySelectorAll('.skill-category-header');
 
 
         // Ask Questions elements
@@ -611,53 +613,18 @@
         });
 
         // Function to call Gemini API for Skill Explainer
-        skillContainers.forEach(container => {
-            container.addEventListener('click', async (event) => {
-                if (event.target.classList.contains('skill-item')) {
-                    const skillName = event.target.textContent.trim();
-                    skillExplanationOutput.innerHTML = ''; // Clear previous output
-                    skillExplanationPlaceholder.classList.add('hidden');
-                    skillExplanationLoading.classList.remove('hidden');
-
-                    const prompt = `Explain the significance of "${skillName}" for a Business Data Analyst. Be concise (2-3 sentences).`;
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // Canvas will provide this at runtime
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) { // Check if the response was successful (HTTP 200-299)
-                            const errorBody = await response.text(); // Read response as text for debugging
-                            throw new Error(`API request failed with status ${response.status}: ${errorBody}`);
-                        }
-
-                        const result = await response.json();
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            skillExplanationOutput.textContent = result.candidates[0].content.parts[0].text;
-                        } else {
-                            skillExplanationOutput.textContent = 'Could not explain skill. Please try again.';
-                        }
-                    } catch (error) {
-                        console.error('Error explaining skill:', error);
-                        skillExplanationOutput.textContent = `Error explaining skill: ${error.message}. Please try again later.`;
-                    } finally {
-                        skillExplanationLoading.classList.add('hidden');
-                        if (skillExplanationOutput.innerHTML === '') {
-                            skillExplanationPlaceholder.classList.remove('hidden');
-                        }
-                    }
-                }
+        skillCategoryHeaders.forEach(header => { // Loop through headers
+            header.addEventListener('click', (event) => {
+                const targetId = header.dataset.target;
+                const skillListContent = document.getElementById(targetId);
+                
+                // Toggle visibility of the skill list content
+                skillListContent.classList.toggle('visible');
+                // Toggle 'expanded' class on the header for arrow rotation
+                header.classList.toggle('expanded');
             });
         });
+
 
         // Function to handle "Send Question" button click
         sendQuestionBtn.addEventListener('click', () => {
