@@ -1,627 +1,1184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ben Mishal Bensam Sujin - Business Data Analyst</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgPrimary: '#0A0A0A',
+                        bgSecondary: '#111111',
+                        bgTertiary: '#161616',
+                        accent: '#FF6A00',
+                        accentHover: '#ff8533',
+                        textPrimary: '#FFFFFF',
+                        textSecondary: '#A0A0A0',
+                        divider: 'rgba(255, 255, 255, 0.08)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    letterSpacing: {
+                        tightest: '-0.01em',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f3f0; color: #333; }
-        .section-padding { padding: 4rem 0; }
-        .nav-link { @apply text-gray-600 hover:text-blue-600 font-medium transition-colors duration-200; }
-        .card { @apply bg-white rounded-lg shadow-md p-6; }
-        .skill-category { @apply font-semibold text-blue-700 mb-2; }
-        /* Enhanced skill item styling for a 'pop-out' effect */
-        .skill-item { 
-            @apply bg-blue-50 text-blue-800 text-sm font-medium px-3 py-1 rounded-full 
-                   cursor-pointer transition-all duration-200 
-                   border border-blue-200 shadow-sm; 
+        body {
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
-        .skill-item:hover {
-            @apply bg-blue-200 shadow-md; /* Stronger shadow on hover */
-        }
-        .experience-item { @apply border-l-4 border-blue-500 pl-4 py-2 relative; }
-        .experience-item::before { content: ''; @apply absolute left-[-8px] top-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full; }
-        .project-item { @apply bg-gray-50 p-4 rounded-md shadow-sm; }
 
-        /* Styling for the clickable skill category header */
-        .skill-category-header {
-            @apply flex justify-between items-center cursor-pointer p-2 rounded-md transition-colors duration-200;
-            background-color: #e0f2fe; /* Light blue background for headers */
-            border: 1px solid #90cdf4;
-            margin-bottom: 0.5rem; /* Space between header and list */
+        /* Layout */
+        .max-w-layout {
+            max-width: 1300px;
+            margin: 0 auto;
         }
-        .skill-category-header:hover {
-            background-color: #bfdbfe; /* Slightly darker on hover */
+
+        .section-spacing {
+            padding: 8rem 0;
         }
-        .skill-category-header .arrow-icon {
-            transition: transform 0.2s ease-in-out;
-            display: inline-block; /* Crucial for transform to work reliably */
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
-        .skill-category-header.expanded .arrow-icon {
+
+        .text-secondary {
+            color: #A0A0A0;
+        }
+
+        /* Surfaces */
+        .surface {
+            background-color: #111111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .surface-elevated {
+            background-color: #161616;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Interactive Elements */
+        .btn-primary {
+            background-color: #FF6A00;
+            color: #0A0A0A;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 20px rgba(255, 106, 0, 0.4);
+            background-color: #ff8533;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.04);
+            border-color: #FF6A00;
+            color: #FF6A00;
+            box-shadow: 0 0 15px rgba(255, 106, 0, 0.15);
+        }
+
+        .premium-card {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 106, 0, 0.3);
+        }
+
+        .premium-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        .card-glow {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 20px rgba(255, 106, 0, 0.05);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* Image hover zoom */
+        .img-container {
+            overflow: hidden;
+        }
+
+        .img-zoom {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .premium-card:hover .img-zoom {
+            transform: scale(1.03);
+        }
+
+        /* Motion System */
+        .load-anim {
+            opacity: 0;
+        }
+
+        .load-anim-up {
+            transform: translateY(20px);
+        }
+
+        .load-anim-scale {
+            transform: scale(0.96);
+        }
+
+        .scroll-hidden {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Headshot & Background */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .headshot-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110%;
+            height: 110%;
+            background: radial-gradient(circle, rgba(255, 106, 0, 0.2) 0%, rgba(255, 106, 0, 0) 70%);
+            filter: blur(20px);
+            z-index: 0;
+        }
+
+        .bg-mesh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(255, 106, 0, 0.04), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.02), transparent 25%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navbar blur */
+        .nav-glass {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Forms */
+        .input-premium {
+            background-color: #161616;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+
+        .input-premium:focus {
+            outline: none;
+            border-color: #FF6A00;
+            box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.3);
+            background-color: #1a1a1a;
+        }
+
+        /* Skill Lists Customization */
+        .skill-list-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .skill-list-content.visible {
+            max-height: 500px;
+            /* arbitrary large enough height */
+            opacity: 1;
+            margin-top: 1rem;
+        }
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .group.expanded .arrow-icon {
             transform: rotate(90deg);
         }
-        /* Initial state for skill content */
-        .skill-list-content {
-            display: none !important; /* Hidden by default, with !important for specificity */
+
+        .skill-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
-        .skill-list-content.visible {
-            display: flex !important; /* Display as flex when visible, with !important for specificity */
-            flex-wrap: wrap; /* Added flex-wrap here */
-            gap: 0.5rem; /* Added gap here */
+
+        .skill-pill:hover {
+            background: rgba(255, 106, 0, 0.1);
+            border-color: rgba(255, 106, 0, 0.4);
+            color: #ff8533;
+            transform: translateY(-2px);
         }
     </style>
 </head>
-<body class="antialiased">
 
-    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#home" class="text-xl font-bold text-blue-700">Ben Mishal B.S.</a>
-            <div class="space-x-6 hidden md:flex">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#certifications" class="nav-link">Certifications</a>
-                <a href="#client-tools" class="nav-link">Client Tools</a>
-                <a href="#ask-questions" class="nav-link">Ask Questions</a>
-                <a href="#contact" class="nav-link">Contact</a>
+<body class="antialiased">
+    <div class="bg-mesh parallax-slower"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-layout px-6 py-4 flex justify-between items-center">
+            <a href="#home"
+                class="text-xl font-bold tracking-tightest text-white hover:text-accent transition-colors">Ben Mishal
+                B.S.</a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#about" class="text-secondary hover:text-white transition-colors">About</a>
+                <a href="#experience" class="text-secondary hover:text-white transition-colors">Experience</a>
+                <a href="#projects" class="text-secondary hover:text-white transition-colors">Projects</a>
+                <a href="#skills" class="text-secondary hover:text-white transition-colors">Skills</a>
+                <a href="#tools" class="text-secondary hover:text-white transition-colors">Tools</a>
+                <a href="#contact" class="text-secondary hover:text-white transition-colors">Contact</a>
             </div>
-            <button class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none">
-                ☰
+            <button class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
             </button>
         </div>
     </nav>
 
-    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white flex items-center justify-center min-h-screen pt-16">
-        <div class="container mx-auto px-4 text-center">
-            <div class="mb-6">
-                <img src="headshot.jpeg" alt="Ben Mishal B.S. Profile Picture" class="w-32 h-32 mx-auto rounded-full object-cover border-4 border-white shadow-lg">
-            </div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-3 leading-tight">Ben Mishal Bensam Sujin</h1>
-            <p class="text-xl md:text-2xl font-light mb-6 max-w-3xl mx-auto">
-                Business Data Analyst | Expert in Machine Learning, Financial Modeling, and Data Visualization | Driving Data-Driven Decision Making | MSc Business Analytics Problem Solver
-            </p>
-            <div class="flex flex-wrap justify-center gap-4 text-lg">
-                <a href="mailto:benmishalben@gmail.com" class="bg-white text-blue-700 hover:bg-blue-100 px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
-                    📧 Email Me
-                </a>
-                <a href="https://www.linkedin.com/in/ben-mishal-b-s-2bb928169/" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-700 hover:bg-blue-100 px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
-                    🔗 LinkedIn Profile
-                </a>
-            </div>
-        </div>
-    </section>
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="max-w-layout px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-    <section id="about" class="section-padding bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">About Me</h2>
-            <div class="card">
-                <p id="about-me-summary" class="text-lg text-gray-700 leading-relaxed mb-6"></p>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4">Core Competencies & Key Skills</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div>
-                        <div class="skill-category-header" data-target="business-skills-list">
-                            <p class="skill-category !mb-0">Business Analysis & Strategy</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="business-skills-list">
-                            <span class="skill-item">Requirements Gathering</span>
-                            <span class="skill-item">Process Mapping</span>
-                            <span class="skill-item">Gap Analysis</span>
-                            <span class="skill-item">Feasibility Studies</span>
-                            <span class="skill-item">Business Process Modeling</span>
-                            <span class="skill-item">User Stories</span>
-                            <span class="skill-item">Stakeholder Management</span>
-                            <span class="skill-item">Strategic Planning</span>
-                            <span class="skill-item">Market Research</span>
-                            <span class="skill-item">Customer Segmentation</span>
-                            <span class="skill-item">Financial Modeling</span>
-                        </div>
+            <!-- Left: Content -->
+            <div class="z-10 order-2 lg:order-1">
+                <div
+                    class="load-anim load-anim-up stagger-1 mb-4 inline-block px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent text-sm font-semibold tracking-wide">
+                    MSc Business Analytics
+                </div>
+                <h1 class="load-anim load-anim-up stagger-2 text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Driving strategy through <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-[#ffb880]">data
+                        intelligence.</span>
+                </h1>
+                <p
+                    class="load-anim load-anim-up stagger-3 text-lg md:text-xl text-secondary mb-10 max-w-xl font-light leading-relaxed">
+                    Business Data Analyst expert in machine learning, financial modeling, and advanced data
+                    visualization. Delivering elite consulting-level insights and optimizing system architectures for
+                    strategic growth.
+                </p>
+                <div class="load-anim stagger-4 flex flex-wrap gap-4 items-center">
+                    <a href="#projects" class="btn-primary px-8 py-4 rounded-full font-semibold shadow-lg">View
+                        Projects</a>
+                    <a href="#contact" class="btn-secondary px-8 py-4 rounded-full font-semibold">Get in Touch</a>
+                </div>
+            </div>
+
+            <!-- Right: Headshot -->
+            <div class="z-10 order-1 lg:order-2 flex justify-center lg:justify-end relative">
+                <div class="load-anim load-anim-scale stagger-5 relative headshot-wrapper inline-block">
+                    <div class="headshot-glow"></div>
+                    <!-- Abstract accent frame -->
+                    <div
+                        class="absolute inset-0 rounded-full border border-accent/30 scale-[1.1] opacity-50 parallax-slower">
                     </div>
-                    <div>
-                        <div class="skill-category-header" data-target="data-science-skills-list">
-                            <p class="skill-category !mb-0">Data Science & Analytics</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="data-science-skills-list">
-                            <span class="skill-item">Python</span>
-                            <span class="skill-item">R</span>
-                            <span class="skill-item">SQL</span>
-                            <span class="skill-item">SAS Viya</span>
-                            <span class="skill-item">Stata</span>
-                            <span class="skill-item">Data Mining</span>
-                            <span class="skill-item">Predictive Modeling</span>
-                            <span class="skill-item">Machine Learning</span>
-                            <span class="skill-item">Deep Learning</span>
-                            <span class="skill-item">NLP</span>
-                            <span class="skill-item">Computer Vision</span>
-                            <span class="skill-item">Econometric Analysis</span>
-                            <span class="skill-item">Statistical Modeling</span>
-                            <span class="skill-item">Feature Engineering</span>
-                            <span class="skill-item">A/B Testing</span>
-                            <span class="skill-item">Experiment Design</span>
-                        </div>
+                    <div
+                        class="absolute inset-0 rounded-full border border-white/10 scale-[1.25] opacity-20 parallax-faster">
                     </div>
-                    <div>
-                        <div class="skill-category-header" data-target="bi-tools-skills-list">
-                            <p class="skill-category !mb-0">Business Intelligence & Tools</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="bi-tools-skills-list">
-                            <span class="skill-item">Power BI</span>
-                            <span class="skill-item">Tableau</span>
-                            <span class="skill-item">Dashboard Development</span>
-                            <span class="skill-item">SAP ERP</span>
-                            <span class="skill-item">Excel (Advanced)</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="skill-category-header" data-target="software-skills-list">
-                            <p class="skill-category !mb-0">Software & Data Engineering</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="software-skills-list">
-                            <span class="skill-item">Java</span>
-                            <span class="skill-item">Git</span>
-                            <span class="skill-item">Neo4j</span>
-                            <span class="skill-item">MATLAB</span>
-                            <span class="skill-item">AWS (In Progress)</span>
-                            <span class="skill-item">Big Data Technologies (e.g., Spark, Hadoop)</span>
-                            <span class="skill-item">Data Warehousing</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="skill-category-header" data-target="project-risk-skills-list">
-                            <p class="skill-category !mb-0">Project & Risk Management</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="project-risk-skills-list">
-                            <span class="skill-item">Agile Methodologies</span>
-                            <span class="skill-item">Scrum</span>
-                            <span class="skill-item">Kanban</span>
-                            <span class="skill-item">Project Planning</span>
-                            <span class="skill-item">Budget Management</span>
-                            <span class="skill-item">Resource Allocation</span>
-                            <span class="skill-item">Gantt Charts</span>
-                            <span class="skill-item">Risk Assessment</span>
-                            <span class="skill-item">Risk Mitigation</span>
-                            <span class="skill-item">Compliance</span>
-                            <span class="skill-item">Regulatory Frameworks</span>
-                            <span class="skill-item">Operational Risk</span>
-                            <span class="skill-item">Cybersecurity Risk</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="skill-category-header" data-target="communication-skills-list">
-                            <p class="skill-category !mb-0">Communication & Collaboration</p>
-                            <span class="arrow-icon text-blue-700 text-xl">▶</span>
-                        </div>
-                        <div class="skill-list-content" id="communication-skills-list">
-                            <span class="skill-item">Stakeholder Engagement</span>
-                            <span class="skill-item">Client Interaction</span>
-                            <span class="skill-item">Presentations</span>
-                            <span class="skill-item">Report Writing</span>
-                            <span class="skill-item">Cross-functional Collaboration</span>
-                        </div>
-                    </div>
+
+                    <img src="premium_headshot.png" alt="Ben Mishal B.S."
+                        class="relative z-10 w-64 h-64 md:w-80 md:h-80 object-cover rounded-full shadow-[0_0_40px_rgba(0,0,0,0.8)] border border-white/10 floating-element">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="section-padding bg-gray-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Work Experience</h2>
-            <div class="space-y-8">
-                <div class="card experience-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Business Development Analyst</h3>
-                    <p class="text-blue-600">Step8Up Group, Camberley, England</p>
-                    <p class="text-sm text-gray-500 mb-2">Dec 2024 - Present</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>Conducted market analysis to identify emerging trends, guiding leadership decisions with <strong>actionable insights</strong> and contributing to strategic business development initiatives.</li>
-                        <li>Tracked and analyzed sales metrics using <strong>Excel and Power BI</strong>, leading to <strong>measurable improvements in outreach and conversion rates</strong>.</li>
-                        <li>Collaborated cross-functionally to refine business processes, significantly <strong>enhancing client targeting strategies and operational efficiency</strong>.</li>
-                        <li>Optimized sales funnel tracking mechanisms, resulting in <strong>quantifiable gains in conversion rates</strong>.</li>
-                    </ul>
+    <!-- Metrics Section -->
+    <section class="py-12 relative z-20 -mt-20">
+        <div class="max-w-layout px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="surface premium-card p-6 rounded-2xl text-center scroll-hidden"
+                    style="transition-delay: 50ms;">
+                    <div class="card-glow rounded-2xl"></div>
+                    <p class="text-4xl font-bold text-accent mb-1">3+</p>
+                    <p class="text-sm text-secondary font-medium uppercase tracking-wider">Years Exp.</p>
                 </div>
-                <div class="card experience-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Business Analyst (Volunteering)</h3>
-                    <p class="text-blue-600">Madras Kitchen, Camberley, England, United Kingdom</p>
-                    <p class="text-sm text-gray-500 mb-2">Dec 2023 - Dec 2024</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>Supported the successful launch of a start-up restaurant from pre-registration through to operational setup, effectively balancing university commitments.</li>
-                        <li>Developed a <strong>comprehensive business plan</strong> outlining step-by-step strategies for start-up execution and sustainable growth.</li>
-                        <li>Conducted <strong>in-depth market research and competitor analysis</strong> to inform strategic pricing, precise target customer identification, and effective niche positioning.</li>
-                        <li>Analyzed customer demographics, income trends, and spending behaviors to <strong>refine service offerings and optimize menu pricing strategies</strong>, contributing to market fit.</li>
-                    </ul>
+                <div class="surface premium-card p-6 rounded-2xl text-center scroll-hidden"
+                    style="transition-delay: 150ms;">
+                    <div class="card-glow rounded-2xl"></div>
+                    <p class="text-4xl font-bold text-white mb-1">15+</p>
+                    <p class="text-sm text-secondary font-medium uppercase tracking-wider">Projects</p>
                 </div>
-                <div class="card experience-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Business Data Analyst Intern</h3>
-                    <p class="text-blue-600">Aluzie (ITEK Program), Guildford, Surrey, United Kingdom</p>
-                    <p class="text-sm text-gray-500 mb-2">Feb 2024 - Jul 2024</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>Conducted <strong>R&D on software code architecture</strong> using <strong>machine learning</strong> to analyze and interpret complex system structures.</li>
-                        <li>Utilized <strong>Neo4j and SQL</strong> to model code relationships, generating <strong>interactive visual insights through Power BI</strong> for enhanced understanding.</li>
-                        <li>Developed a <strong>machine learning model in Python</strong> to map and explain complex code flows, significantly <strong>aiding new developers in onboarding</strong> and reducing ramp-up time.</li>
-                        <li>Created and presented a <strong>strategic business plan</strong> aimed at enhancing development efficiency and codebase comprehension.</li>
-                        <li>Awarded <strong>"Innovative Collaborator"</strong> for innovative contributions and impactful project outcomes during the internship.</li>
-                    </ul>
+                <div class="surface premium-card p-6 rounded-2xl text-center scroll-hidden"
+                    style="transition-delay: 250ms;">
+                    <div class="card-glow rounded-2xl"></div>
+                    <p class="text-4xl font-bold text-white mb-1">20+</p>
+                    <p class="text-sm text-secondary font-medium uppercase tracking-wider">Tools Mastered</p>
                 </div>
-                <div class="card experience-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Software Developer</h3>
-                    <p class="text-blue-600">Tata Consultancy Services, Chennai, India</p>
-                    <p class="text-sm text-gray-500 mb-2">Dec 2021 - May 2023</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>Developed and implemented <strong>critical code changes in Java</strong> for NSDL (National Securities Depository Limited) as part of the settlement team, ensuring system integrity.</li>
-                        <li>Reviewed and executed software change requests, ensuring <strong>100% compliance with functional requirements</strong> and minimizing errors.</li>
-                        <li>Conducted <strong>rigorous testing in multiple environments</strong> to validate changes and ensure seamless system integration and performance.</li>
-                        <li>Prepared <strong>comprehensive documentation</strong>, including detailed change request records and release notes, to support efficient deployment and audit processes.</li>
-                    </ul>
-                </div>
-                <div class="card experience-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Analyst</h3>
-                    <p class="text-blue-600">NTT DATA, Chennai, India</p>
-                    <p class="text-sm text-gray-500 mb-2">Jul 2021 - Oct 2021</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>Investigated <strong>over 150 pending insurance claims</strong> for a U.S.-based hospital by meticulously analyzing patient files and insurance records.</li>
-                        <li>Communicated effectively with U.S. insurance companies to <strong>identify root causes for delayed or denied payments</strong>, facilitating resolution.</li>
-                        <li>Provided <strong>detailed updates and claim statuses</strong> to assist claim processing teams in efficiently resolving outstanding issues.</li>
-                        <li>Ensured <strong>accurate documentation and timely escalation</strong> of claim-related concerns to accelerate reimbursement processes.</li>
-                    </ul>
+                <div class="surface premium-card p-6 rounded-2xl text-center scroll-hidden"
+                    style="transition-delay: 350ms;">
+                    <div class="card-glow rounded-2xl"></div>
+                    <p class="text-4xl font-bold text-white mb-1">3</p>
+                    <p class="text-sm text-secondary font-medium uppercase tracking-wider">Key Domains</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="education" class="section-padding bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Education</h2>
-            <div class="space-y-8">
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900">Master of Science in Business Analytics</h3>
-                    <p class="text-blue-600">University of Surrey, Guildford, UK</p>
-                    <p class="text-sm text-gray-500 mb-2">Sep 2023 - Sep 2024</p>
-                    <p class="text-gray-700">Core Modules: Data Mining & Text Analytics, Principles of Analytics, Statistics & Econometrics, Operational Analytics, ML/AI & Visualizations, Financial Modelling, Data & BPM (SAP), Finance & Investment Principles.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900">Postgraduate Program in Management (PGPM)</h3>
-                    <p class="text-blue-600">Great Lakes Institute of Management, Gurgaon, India</p>
-                    <p class="text-sm text-gray-500 mb-2">Nov 2021 - Nov 2022</p>
-                    <p class="text-gray-700">Key Modules (Analytics Focus): Data Visualization using Tableau, Business Analytics using Python, Machine Learning and its Applications.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900">Bachelor of Technology in Mechanical Engineering</h3>
-                    <p class="text-blue-600">B.S. Abdur Rahman Crescent Institute of Science and Technology, Chennai, India</p>
-                    <p class="text-sm text-gray-500 mb-2">Jun 2017 - Jul 2021</p>
-                    <p class="text-gray-700">Core Modules: Engineering Mechanics, Thermodynamics, Fluid Mechanics, Solid Mechanics, Heat & Mass Transfer, Machine Design, Manufacturing Technology, Mechanical Measurements, CAD/CAM.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="section-padding bg-gray-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Key Projects & Achievements</h2>
-            <div class="space-y-6">
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Enhancing Sustainable Finance through GPU-Accelerated Value at Risk (VaR) Models in Central Banking</h3>
-                    <p class="text-gray-700 mt-2">Developed and implemented GPU-accelerated VaR models to significantly enhance the efficiency and speed of risk assessments for sustainable finance initiatives in central banking, demonstrating expertise in high-performance computing and financial analytics.</p>
-                </div>
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">SAP Systems Optimization Project with Decathlon</h3>
-                    <p class="text-gray-700 mt-2">Collaborated on an SAP systems project for Decathlon, focusing on optimizing business processes and data flow to improve operational efficiency and decision-making capabilities within a large retail environment.</p>
-                </div>
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Econometric Analysis for Market Insights (using Stata)</h3>
-                    <p class="text-gray-700 mt-2">Conducted in-depth econometric analysis using Stata to derive robust market insights and support strategic planning, showcasing strong statistical modeling and data interpretation skills.</p>
-                </div>
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Data Mining on UK Road Accident Dataset (using SAS Viya)</h3>
-                    <p class="text-gray-700 mt-2">Performed extensive data mining on a large UK Road Accident Dataset using SAS Viya, identifying critical patterns and factors contributing to accidents to inform safety strategies and policy recommendations.</p>
-                </div>
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Optimization of Rapid DNA Operation for Police Force</h3>
-                    <p class="text-gray-700 mt-2">Developed and implemented an optimization strategy for Rapid DNA operations, significantly improving efficiency and turnaround times for a police force, directly impacting investigative capabilities.</p>
-                </div>
-                <div class="project-item">
-                    <h3 class="text-xl font-semibold text-gray-900">Customer Interest Prediction for Caravan Insurance Policy</h3>
-                    <p class="text-gray-700 mt-2">Designed and implemented a predictive model to forecast customer interest in caravan insurance policies, enabling targeted marketing strategies and improved conversion rates for an insurance provider.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="certifications" class="section-padding bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Certifications & Awards</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900">Certifications</h3>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1 mt-2">
-                        <li>Agile Project Management (Foundation & Practitioner) - In Progress</li>
-                        <li>AWS Certified Cloud Practitioner - Expected 2025</li>
-                        <li>iTEK Training and Project Completion Certification - 2024</li>
-                        <li>Business English Certificate Preliminary - Cambridge Assessment English - 2024</li>
-                        <li>MATLAB Onramp Course - 2020</li>
-                        <li>Carbon Literacy Certificate - Sustainability Suite - 2025</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900">Awards</h3>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1 mt-2">
-                        <li>iTEK Innovative Collaborator Award</li>
-                        <li>iTEK One to Watch Award</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="client-tools" class="section-padding bg-gray-50">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">🛠️ Client-Side Tools 🛠️</h2>
-            <p class="mb-8 text-gray-700 text-center">
-                Explore dynamic insights and validate your fit for roles using built-in analytical tools. No external APIs needed!
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">🎯 Role Alignment Analyzer</h3>
-                    <p class="text-gray-700 mb-4">
-                        Paste a job description below to receive an assessment of how well your profile aligns with the role's requirements based on keyword matching.
+    <!-- About & Experience -->
+    <section id="about" class="section-spacing">
+        <div class="max-w-layout px-6 grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Bio -->
+            <div class="lg:col-span-5 scroll-hidden">
+                <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-2">About Me</h2>
+                <h3 class="text-3xl md:text-4xl font-bold mb-6">Blending Technical Depth with Strategic Vision</h3>
+                <div class="text-secondary leading-relaxed space-y-4 font-light text-lg">
+                    <p>
+                        As a highly motivated <span class="text-white font-medium">Business Data Analyst</span> with
+                        over <span class="text-white font-medium">3 years of impactful experience</span> and a <span
+                            class="text-white font-medium">Master's in Business Analytics</span> from the University of
+                        Surrey, I excel at transforming complex data into actionable insights that drive significant
+                        business growth and operational efficiency.
                     </p>
-                    <textarea id="jobDescriptionInput" rows="8" placeholder="Paste the full job description here..." class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
-                    <button id="calculateMatchBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105 w-full">
-                        Calculate Match Score
-                    </button>
-                    <div id="matchOutput" class="mt-6 p-4 bg-purple-50 rounded-md text-gray-800 min-h-[100px] flex flex-col items-center justify-center text-center">
-                        <span id="matchPlaceholder" class="text-gray-600">Your match score and analysis will appear here.</span>
-                        <div id="matchLoading" class="hidden text-purple-600 mt-2">Analyzing...</div>
-                        <div id="matchScore" class="hidden text-5xl font-bold text-purple-800 mt-4"></div>
-                        <p id="matchExplanation" class="hidden text-lg text-gray-700 mt-2"></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">💡 Skill Explainer</h3>
-                    <p class="text-gray-700 mb-4">
-                        Click on any skill in the "About Me" section above to get a quick explanation of its significance and application in a Business Data Analyst role.
+                    <p>
+                        My expertise spans <span class="text-white font-medium">machine learning, financial modeling,
+                            econometric analysis, and advanced data visualization</span>. I have a proven record in
+                        optimizing business processes, developing robust financial models, and enhancing SAP systems.
                     </p>
-                    <div id="skillExplanationOutput" class="p-3 bg-green-50 rounded-md text-gray-800 min-h-[100px] flex items-center justify-center text-center">
-                        <span id="skillExplanationPlaceholder">Click a skill to see its explanation.</span>
-                        <div id="skillExplanationLoading" class="hidden text-green-600">Loading...</div>
+                </div>
+
+                <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-2 mt-12">Education</h2>
+                <div class="space-y-6 mt-4">
+                    <div>
+                        <h4 class="text-white font-semibold">MSc Business Analytics</h4>
+                        <p class="text-sm text-accent mb-1">University of Surrey • 2023 - 2024</p>
+                        <p class="text-xs text-secondary font-light border-l-2 border-white/10 pl-3">
+                            <span class="text-white/80 font-medium">Dissertation:</span> Enhancing Sustainable Finance
+                            through GPU-Accelerated Value at Risk (VaR) Models in Central Banking
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold">PGPM (Analytics Focus)</h4>
+                        <p class="text-sm text-secondary">Great Lakes Inst of Mgmt • 2021 - 2022</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold">BTech Mechanical Engineering</h4>
+                        <p class="text-sm text-secondary">BSA Crescent Institute • 2017 - 2021</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Timeline -->
+            <div class="lg:col-span-7">
+                <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-6 scroll-hidden">Experience
+                </h2>
+                <div class="space-y-6">
+                    <!-- Exp Item 1 -->
+                    <div class="surface premium-card p-6 rounded-2xl relative scroll-hidden">
+                        <div class="card-glow rounded-2xl"></div>
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Business Development Analyst</h3>
+                                <p class="text-secondary font-medium mt-1">Step8Up Group</p>
+                            </div>
+
+                        </div>
+                        <p class="text-sm text-secondary leading-relaxed mb-4">
+                            Conducted market analysis to identify emerging trends, tracking sales metrics via Power BI.
+                            Collaborated cross-functionally to refine client targeting, leading to measurable
+                            improvements in conversion rates.
+                        </p>
+                    </div>
+
+                    <!-- Exp Item 2 -->
+                    <div class="surface premium-card p-6 rounded-2xl relative scroll-hidden">
+                        <div class="card-glow rounded-2xl"></div>
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Business Data Analyst Intern</h3>
+                                <p class="text-secondary font-medium mt-1">Aluzie (ITEK Program)</p>
+                            </div>
+
+                        </div>
+                        <p class="text-sm text-secondary leading-relaxed mb-0">
+                            R&D on software architecture using machine learning. Utilized Neo4j and SQL to model code
+                            relationships, presented via Power BI. Awarded "Innovative Collaborator" for reducing dev
+                            onboarding time.
+                        </p>
+                    </div>
+
+                    <!-- Exp Item 3 -->
+                    <div class="surface premium-card p-6 rounded-2xl relative scroll-hidden">
+                        <div class="card-glow rounded-2xl"></div>
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Software Developer</h3>
+                                <p class="text-secondary font-medium mt-1">Tata Consultancy Services</p>
+                            </div>
+
+                        </div>
+                        <p class="text-sm text-secondary leading-relaxed mb-0">
+                            Developed core Java adjustments for NSDL settlement. Executed robust CI/CD compliance
+                            validation, assuring seamless system integration and zero-defect enterprise deployment.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="ask-questions" class="section-padding bg-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Connect & Inquire</h2>
-            <p class="mb-8 text-gray-700 text-center">
-                I'm always open to discussing new projects, career opportunities, or collaborations. Feel free to send me any questions directly.
-            </p>
+    <!-- Projects Section -->
+    <section id="projects" class="section-spacing relative">
+        <!-- Background accent -->
+        <div class="absolute inset-0 bg-gradient-to-b from-bgPrimary via-bgSecondary to-bgPrimary opacity-50 z-[-1]">
+        </div>
 
-            <div class="card">
-                <textarea id="questionInput" rows="8" placeholder="Type your question here..." class="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4"></textarea>
-                <button id="sendQuestionBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300 ease-in-out transform hover:scale-105 w-full">
-                    Send Question via Email
-                </button>
-                <div id="questionStatus" class="mt-4 text-center text-sm text-gray-600"></div>
+        <div class="max-w-layout px-6">
+            <div class="text-center mb-16 scroll-hidden">
+                <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-2">Portfolio</h2>
+                <h3 class="text-3xl md:text-5xl font-bold">Featured Projects</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div class="card-glow rounded-2xl z-10 pointer-events-none"></div>
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            GPU-Accelerated VaR Models</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            <span class="text-accent/80 font-medium block mb-1">Master's Dissertation Project</span>
+                            Developed GPU-accelerated Value at Risk (VaR) models to significantly enhance risk
+                            assessment speed for sustainable finance and ESG initiatives in central banking.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">ESG
+                                Analysis</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">High-performance
+                                Computing</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Financial
+                                Analytics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            SAP Systems Optimization</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            Collaborated on SAP systems optimization for Decathlon, focusing on streamlining data flows
+                            to improve operational efficiency in retail.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">SAP ERP</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Process
+                                Optimization</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            Market Econometrics</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            Conducted in-depth econometric analysis using Stata to derive robust market insights
+                            supporting long-term strategic planning.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Stata</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Statistical
+                                Modeling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 (Optional hidden or visible) -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            Road Accident Data Mining</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            Performed extensive data mining on a large UK Road Accident Dataset using SAS Viya to inform
+                            safety strategies.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">SAS Viya</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Predictive
+                                Modeling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            Rapid DNA Optimization</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            Implemented optimization strategies for Rapid DNA operations, significantly improving police
+                            force turnaround times.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Operational
+                                Research</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="surface premium-card rounded-2xl overflow-hidden scroll-hidden flex flex-col h-full group">
+                    <div
+                        class="h-48 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-center p-6 img-container relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-[#111] to-[#222] opacity-50 z-0"></div>
+                        <h4
+                            class="text-xl font-bold text-white text-center relative z-10 img-zoom group-hover:text-accent transition-colors">
+                            Caravan Insurance Predictor</h4>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <p class="text-sm text-secondary leading-relaxed mb-6">
+                            Designed a predictive model forecasting customer interest, boosting targeted marketing
+                            effectiveness for an insurance provider.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Machine
+                                Learning</span>
+                            <span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded">Python</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section-padding bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div class="container mx-auto px-4 text-center max-w-2xl">
-            <h2 class="text-3xl font-bold mb-4">Get in Touch</h2>
-            <p class="text-lg mb-8">
-                I'm always open to discussing new projects, opportunities, or collaborations. Feel free to reach out!
-            </p>
-            <div class="space-y-4 text-lg">
-                <p>📧 Email: <a href="mailto:benmishalben@gmail.com" class="underline hover:text-blue-200">benmishalben@gmail.com</a></p>
-                <p>📞 Phone: +44 7776426029</p>
-                <p>📍 Location: Surrey, United Kingdom</p>
-                <p>🔗 LinkedIn: <a href="https://www.linkedin.com/in/ben-mishal-b-s-2bb928169/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-200">linkedin.com/in/ben-mishal-b-s-2bb928169/</a></p>
+    <!-- Skills Section -->
+    <section id="skills" class="section-spacing">
+        <div class="max-w-layout px-6">
+            <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-2 scroll-hidden">Expertise</h2>
+            <h3 class="text-3xl md:text-5xl font-bold mb-12 scroll-hidden">Core Competencies</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Category 1 -->
+                <div class="surface p-6 rounded-2xl scroll-hidden">
+                    <div class="flex justify-between items-center group cursor-pointer"
+                        onclick="toggleSkillList('skill-data')">
+                        <h4 class="text-lg font-bold text-white group-hover:text-accent transition-colors">Data Science
+                            & Analytics</h4>
+                        <svg class="w-5 h-5 text-secondary arrow-icon" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div id="skill-data" class="skill-list-content flex flex-wrap gap-2">
+                        <span
+                            class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Python</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">R</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">SQL</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Machine
+                            Learning</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">NLP</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">SAS
+                            Viya</span>
+                        <span
+                            class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Econometrics</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">A/B
+                            Testing</span>
+                    </div>
+                </div>
+
+                <!-- Skill Category 2 -->
+                <div class="surface p-6 rounded-2xl scroll-hidden">
+                    <div class="flex justify-between items-center group cursor-pointer"
+                        onclick="toggleSkillList('skill-bus')">
+                        <h4 class="text-lg font-bold text-white group-hover:text-accent transition-colors">Business
+                            Strategy</h4>
+                        <svg class="w-5 h-5 text-secondary arrow-icon" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div id="skill-bus" class="skill-list-content flex flex-wrap gap-2">
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">ESG &
+                            Sustainability</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Financial
+                            Modeling</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Process
+                            Mapping</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Market
+                            Research</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Gap
+                            Analysis</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Stakeholder
+                            Mgmt</span>
+                    </div>
+                </div>
+
+                <!-- Skill Category 3 -->
+                <div class="surface p-6 rounded-2xl scroll-hidden">
+                    <div class="flex justify-between items-center group cursor-pointer"
+                        onclick="toggleSkillList('skill-bi')">
+                        <h4 class="text-lg font-bold text-white group-hover:text-accent transition-colors">BI & Tools
+                        </h4>
+                        <svg class="w-5 h-5 text-secondary arrow-icon" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div id="skill-bi" class="skill-list-content flex flex-wrap gap-2">
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Power
+                            BI</span>
+                        <span
+                            class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Tableau</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">SAP
+                            ERP</span>
+                        <span class="skill-pill skill-target text-sm px-3 py-1.5 rounded-md text-secondary">Advanced
+                            Excel</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-white text-center py-4 text-sm">
-        <p>&copy; 2024 Ben Mishal Bensam Sujin. All rights reserved.</p>
+    <!-- Client Tools, Insights & Contact -->
+    <section id="tools" class="section-spacing relative bg-[#0c0c0c] border-t border-white/5">
+        <div class="max-w-layout px-6">
+            <div class="text-center mb-16 scroll-hidden">
+                <h2 class="text-base text-accent font-semibold tracking-wider uppercase mb-2">Capabilities</h2>
+                <h3 class="text-3xl md:text-5xl font-bold">Data-Driven Value</h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                <!-- Left Column: Business Value (Calculator & Chart) -->
+                <div class="space-y-8 scroll-hidden">
+
+                    <!-- Automation ROI Calculator -->
+                    <div class="surface premium-card p-8 rounded-3xl">
+                        <h3 class="text-2xl font-bold mb-2 flex items-center gap-3">
+                            <span class="text-accent text-3xl opacity-80">◱</span> ROI & Automation Calculator
+                        </h3>
+                        <p class="text-sm text-secondary font-light mb-6">Estimate the potential cost savings of
+                            converting manual reporting to automated dashboards.</p>
+
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <label class="text-white/80 font-medium">Manual Hours / Week</label>
+                                    <span id="hoursDisplay" class="text-accent font-bold">15 hrs</span>
+                                </div>
+                                <input type="range" id="hoursSlider" min="1" max="100" value="15"
+                                    class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#FF6A00]">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <label class="text-white/80 font-medium">Avg. Hourly Cost</label>
+                                    <span id="rateDisplay" class="text-accent font-bold">$40 / hr</span>
+                                </div>
+                                <input type="range" id="rateSlider" min="15" max="150" value="40"
+                                    class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#FF6A00]">
+                            </div>
+
+                            <div class="pt-4 border-t border-white/10">
+                                <p class="text-sm text-secondary uppercase tracking-widest mb-1">Estimated Annual Cost
+                                </p>
+                                <p id="annualCost" class="text-4xl font-bold text-white mb-2">$31,200</p>
+                                <p class="text-xs text-white/50">*Based on 52 working weeks. Automating this workflow
+                                    drives permanent ROI.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Analytics Lifecycle Funnel -->
+                    <div class="surface premium-card p-8 rounded-3xl relative overflow-hidden flex flex-col h-full">
+                        <div class="card-glow rounded-3xl"></div>
+                        <h3 class="text-xl font-bold mb-2 text-white">The Analytics Lifecycle</h3>
+                        <p class="text-sm text-secondary font-light mb-6">Hover over each stage to view my methodology.
+                        </p>
+
+                        <div class="flex-1 flex flex-col justify-center items-center gap-2">
+                            <!-- Extraction -->
+                            <div
+                                class="group relative w-full bg-[#161616] border border-white/10 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-accent/40 hover:bg-white/5">
+                                <div class="px-5 py-3 flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-white/90 group-hover:text-accent transition-colors text-sm md:text-base">1.
+                                        Data Extraction</span>
+                                    <span class="text-xs text-secondary">Sources</span>
+                                </div>
+                                <div
+                                    class="max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out px-5 bg-[#111111]">
+                                    <p class="py-3 text-sm text-secondary font-light border-t border-white/5">Extracting
+                                        raw data from disparate sources (SQL, APIs, flat files) ensuring pipeline
+                                        integrity and zero data loss.</p>
+                                </div>
+                            </div>
+
+                            <!-- Cleaning -->
+                            <div
+                                class="group relative w-[90%] bg-[#161616] border border-white/10 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-accent/40 hover:bg-white/5">
+                                <div class="px-5 py-3 flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-white/90 group-hover:text-accent transition-colors text-sm md:text-base">2.
+                                        Data Cleaning</span>
+                                    <span class="text-xs text-secondary">Quality</span>
+                                </div>
+                                <div
+                                    class="max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out px-5 bg-[#111111]">
+                                    <p class="py-3 text-sm text-secondary font-light border-t border-white/5">Handling
+                                        missing values, outlier detection, and normalizing features using Pandas to
+                                        establish a single source of truth.</p>
+                                </div>
+                            </div>
+
+                            <!-- Modeling -->
+                            <div
+                                class="group relative w-[80%] bg-[#161616] border border-white/10 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-accent/40 hover:bg-white/5">
+                                <div class="px-5 py-3 flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-white/90 group-hover:text-accent transition-colors text-sm md:text-base">3.
+                                        Modeling</span>
+                                    <span class="text-xs text-secondary">Patterns</span>
+                                </div>
+                                <div
+                                    class="max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out px-5 bg-[#111111]">
+                                    <p class="py-3 text-sm text-secondary font-light border-t border-white/5">Applying
+                                        statistical algorithms and machine learning (e.g., Random Forest, regression) to
+                                        identify predictive trends.</p>
+                                </div>
+                            </div>
+
+                            <!-- Insights -->
+                            <div
+                                class="group relative w-[70%] bg-[#161616] border border-white/10 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-accent/40 hover:bg-white/5">
+                                <div class="px-5 py-3 flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-white/90 group-hover:text-accent transition-colors text-sm md:text-base">4.
+                                        Insights</span>
+                                    <span class="text-xs text-secondary">Storytelling</span>
+                                </div>
+                                <div
+                                    class="max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out px-5 bg-[#111111]">
+                                    <p class="py-3 text-sm text-secondary font-light border-t border-white/5">
+                                        Translating complex model outputs into intuitive, interactive dashboards via
+                                        Power BI for executive stakeholders.</p>
+                                </div>
+                            </div>
+
+                            <!-- ROI -->
+                            <div
+                                class="group relative w-[60%] bg-[#161616] border border-accent/20 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-accent hover:bg-accent/10 hover:shadow-[0_0_20px_rgba(255,106,0,0.15)]">
+                                <div class="px-5 py-3 flex items-center justify-between">
+                                    <span class="font-bold text-accent text-sm md:text-base">5. Business ROI</span>
+                                    <span class="text-xs text-accent/60">Value</span>
+                                </div>
+                                <div
+                                    class="max-h-0 opacity-0 group-hover:max-h-40 group-hover:opacity-100 transition-all duration-500 ease-in-out px-5">
+                                    <p class="py-3 text-sm text-white/80 font-light border-t border-accent/20">The
+                                        ultimate goal: driving measurable cost reductions, automating workflows, and
+                                        optimizing decisions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Q&A and Contact -->
+                <div class="space-y-8 scroll-hidden" style="transition-delay: 150ms;">
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="surface p-5 rounded-2xl border-l-[3px] border-l-accent/50 text-center">
+                            <p class="text-2xl font-bold text-white stat-number" data-target="150">0</p>
+                            <span class="text-xs text-secondary uppercase tracking-wider block mt-1">+ Claims
+                                Audited</span>
+                        </div>
+                        <div class="surface p-5 rounded-2xl border-l-[3px] border-l-white/20 text-center">
+                            <p class="text-2xl font-bold text-white stat-number" data-target="100">0</p>
+                            <span class="text-xs text-secondary uppercase tracking-wider block mt-1">% Compliance</span>
+                        </div>
+                        <div
+                            class="surface p-5 rounded-2xl border-l-[3px] border-l-accent text-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-accent/5"></div>
+                            <p class="text-2xl font-bold text-accent stat-number" data-target="3">0</p>
+                            <span class="text-xs text-accent/80 uppercase tracking-wider block mt-1">Years
+                                Analytics</span>
+                        </div>
+                    </div>
+
+                    <!-- Ask the Analyst (Accordion) -->
+                    <div class="surface premium-card p-6 md:p-8 rounded-3xl">
+                        <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                            <span class="text-accent text-3xl opacity-80">💬</span> Ask the Analyst
+                        </h3>
+
+                        <div class="space-y-4">
+                            <!-- Q1 -->
+                            <div class="border border-white/10 rounded-xl overflow-hidden bg-[#161616]">
+                                <button
+                                    class="faq-btn w-full text-left p-4 flex justify-between items-center text-sm md:text-base font-semibold text-white/90 hover:text-white hover:bg-white/5 transition-colors focus:outline-none">
+                                    <span>How do you approach predictive modeling?</span>
+                                    <svg class="w-5 h-5 text-accent transform transition-transform duration-300"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div
+                                    class="faq-content max-h-0 overflow-hidden transition-all duration-300 bg-[#111111]">
+                                    <p class="p-4 pt-0 text-sm text-secondary font-light">My approach begins with strict
+                                        feature engineering to ensure data quality. I then select algorithms (like
+                                        Random Forest or XGBoost) based on trade-offs between interpretability and
+                                        accuracy, followed by robust hyperparameter tuning and cross-validation to
+                                        prevent overfitting.</p>
+                                </div>
+                            </div>
+
+                            <!-- Q2 -->
+                            <div class="border border-white/10 rounded-xl overflow-hidden bg-[#161616]">
+                                <button
+                                    class="faq-btn w-full text-left p-4 flex justify-between items-center text-sm md:text-base font-semibold text-white/90 hover:text-white hover:bg-white/5 transition-colors focus:outline-none">
+                                    <span>What is your methodology for process mapping?</span>
+                                    <svg class="w-5 h-5 text-accent transform transition-transform duration-300"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div
+                                    class="faq-content max-h-0 overflow-hidden transition-all duration-300 bg-[#111111]">
+                                    <p class="p-4 pt-0 text-sm text-secondary font-light">I utilize frameworks like BPMN
+                                        to visually document current-state ("as-is") workflows. By consulting
+                                        cross-functional stakeholders, I identify redundancies and bottlenecks to
+                                        propose a streamlined future-state ("to-be") model.</p>
+                                </div>
+                            </div>
+
+                            <!-- Q3 -->
+                            <div class="border border-white/10 rounded-xl overflow-hidden bg-[#161616]">
+                                <button
+                                    class="faq-btn w-full text-left p-4 flex justify-between items-center text-sm md:text-base font-semibold text-white/90 hover:text-white hover:bg-white/5 transition-colors focus:outline-none">
+                                    <span>How do you translate technical findings to stakeholders?</span>
+                                    <svg class="w-5 h-5 text-accent transform transition-transform duration-300"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div
+                                    class="faq-content max-h-0 overflow-hidden transition-all duration-300 bg-[#111111]">
+                                    <p class="p-4 pt-0 text-sm text-secondary font-light">I prioritize data
+                                        visualization via Power BI or Tableau to create intuitive dashboards. I avoid
+                                        technical jargon and instead frame metrics purely around business
+                                        impact—focusing on ROI, risk reduction, and strategic alignment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div id="contact"
+                        class="surface-elevated p-8 rounded-3xl relative overflow-hidden h-full border border-white/10 mt-8">
+                        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent/20 rounded-full blur-[80px]">
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Let's Connect</h2>
+                        <p class="text-sm text-secondary mb-6 font-light">Open to discussions, opportunities, and
+                            consulting.</p>
+                        <div class="space-y-4 mb-6">
+                            <a href="mailto:benmishalben@gmail.com"
+                                class="flex items-center gap-3 text-sm text-white hover:text-accent transition-colors">
+                                <span class="bg-white/5 p-2.5 rounded-full"><svg class="w-4 h-4" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                        </path>
+                                    </svg></span>
+                                <span>benmishalben@gmail.com</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/ben-mishal-b-s-2bb928169/" target="_blank"
+                                class="flex items-center gap-3 text-sm text-white hover:text-accent transition-colors">
+                                <span class="bg-white/5 p-2.5 rounded-full"><svg class="w-4 h-4" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg></span>
+                                <span>LinkedIn Profile</span>
+                            </a>
+                        </div>
+                        <textarea id="questionInput" rows="2"
+                            class="input-premium w-full rounded-xl p-4 text-sm resize-none mb-3"
+                            placeholder="Message..."></textarea>
+                        <button id="sendQuestionBtn"
+                            class="btn-primary w-full py-3 rounded-xl font-bold tracking-wide text-sm">Send</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 border-t border-white/5 text-center text-sm text-secondary">
+        <p>&copy; 2024 Ben Mishal Bensam Sujin. Built with advanced motion system.</p>
     </footer>
 
     <script>
-        // Helper function to convert Markdown bold (**) to HTML strong tags
-        function markdownToHtmlBold(text) {
-            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        }
+        // --- Level 1: Page Load Motion ---
+        window.addEventListener('load', () => {
+            const loadElements = document.querySelectorAll('.load-anim');
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+            // Set initial state
+            loadElements.forEach(el => {
+                el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
             });
+
+            // Staggered reveal
+            setTimeout(() => {
+                const headshot = document.querySelector('.load-anim-scale');
+                if (headshot) {
+                    headshot.style.opacity = '1';
+                    headshot.style.transform = 'scale(1)';
+                }
+
+                document.querySelectorAll('.load-anim-up').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 120);
+                });
+
+                document.querySelectorAll('.stagger-4').forEach(el => {
+                    setTimeout(() => el.style.opacity = '1', 400);
+                });
+            }, 100);
         });
 
-        // This function will be called on page load to set the About Me summary
-        function setAboutMeSummary() {
-            const aboutMeSummaryElement = document.getElementById('about-me-summary');
-            const summaryText = `As a highly motivated **Business Data Analyst** with over **3 years of impactful experience** and a **Master's in Business Analytics** from the University of Surrey, I excel at transforming complex data into actionable insights that drive significant business growth and operational efficiency. My expertise spans **machine learning, financial modeling, econometric analysis, and advanced data visualization**. I have a proven record in optimizing business processes, developing robust financial models, and enhancing SAP systems. I am passionate about leveraging cutting-edge analytical and technical skills to inform strategic decision-making and deliver measurable results in dynamic environments.`;
-            aboutMeSummaryElement.innerHTML = markdownToHtmlBold(summaryText);
-        }
-
-        // Call the function on page load
-        document.addEventListener('DOMContentLoaded', setAboutMeSummary);
-
-
-        // Consolidated Profile Data for NON-AI tools
-        const profileData = `
-            Professional Summary: Highly motivated professional with 3+ years of working experience and a Master's in Business Analytics to refine data-driven strategies and solutions. Demonstrates specialization in leveraging analytical skills to uncover insights and improve business decisions, mainly through machine learning and econometric models. Proven ability to tackle and enhance business processes across varied projects, such as developing financial models and optimizing SAP systems, demonstrating a keen aptitude for translating complex datasets into actionable business strategies. Seeking to apply advanced analytical and technical expertise to optimize business performance and inform strategic decision-making in a dynamic environment.
-
-            Key Skills:
-            Business Analysis & Strategy: Requirements Gathering, Process Mapping, Gap Analysis, Feasibility Studies, Business Process Modeling, User Stories, Stakeholder Management, Strategic Planning, Market Research, Customer Segmentation, Financial Modeling
-            Data Science & Analytics: Python, R, SQL, SAS Viya, Stata, Data Mining, Predictive Modeling, Machine Learning, Deep Learning, NLP, Computer Vision, Econometric Analysis, Statistical Modeling, Feature Engineering, A/B Testing, Experiment Design
-            Business Intelligence & Tools: Power BI, Tableau, Dashboard Development, SAP ERP, Excel (Advanced)
-            Software & Data Engineering: Java, Git, Neo4j, MATLAB, AWS (In Progress), Big Data Technologies (e.g., Spark, Hadoop), Data Warehousing
-            Project & Risk Management: Agile Methodologies, Scrum, Kanban, Project Planning, Budget Management, Resource Allocation, Gantt Charts, Risk Assessment, Risk Mitigation, Compliance, Regulatory Frameworks, Operational Risk, Cybersecurity Risk
-            Communication & Collaboration: Stakeholder Engagement, Client Interaction, Presentations, Report Writing, Cross-functional Collaboration
-
-            Work Experience:
-            Business Development Analyst, Step8Up Group (Dec 2024-Present): Conducted market analysis to identify emerging trends, guiding leadership decisions with actionable insights and contributing to strategic business development initiatives. Tracked and analyzed sales metrics using Excel and Power BI, leading to measurable improvements in outreach and conversion rates. Collaborated cross-functionally to refine business processes, significantly enhancing client targeting strategies and operational efficiency. Optimized sales funnel tracking mechanisms, resulting in quantifiable gains in conversion rates.
-
-            Business Analyst (volunteering), Madras Kitchen (Dec 2023-Dec 2024): Supported the successful launch of a start-up restaurant from pre-registration through to operational setup, effectively balancing university commitments. Developed a comprehensive business plan outlining step-by-step strategies for start-up execution and sustainable growth. Conducted in-depth market research and competitor analysis to inform strategic pricing, precise target customer identification, and effective niche positioning. Analyzed customer demographics, income trends, and spending behaviours to refine service offerings and optimize menu pricing strategies, contributing to market fit.
-
-            Business Data Analyst Intern, Aluzie (ITEK Program) (Feb 2024-Jul 2024): Conducted R&D on software code architecture using machine learning to analyze and interpret complex system structures. Utilized Neo4j and SQL to model code relationships, generating interactive visual insights through Power BI for enhanced understanding. Developed a machine learning model in Python to map and explain complex code flows, significantly aiding new developers in onboarding and reducing ramp-up time. Created and presented a strategic business plan aimed at enhancing development efficiency and codebase comprehension. Awarded "Innovative Collaborator" for innovative contributions and impactful project outcomes during the internship.
-
-            Software Developer, Tata Consultancy Services (Dec 2021-May 2023): Developed and implemented critical code changes in Java for NSDL (National Securities Depository Limited) as part of the settlement team, ensuring system integrity. Reviewed and executed software change requests, ensuring 100% compliance with functional requirements and minimizing errors. Conducted rigorous testing in multiple environments to validate changes and ensure seamless system integration and performance. Prepared comprehensive documentation, including detailed change request records and release notes, to support efficient deployment and audit processes.
-
-            Analyst, NTT DATA (Jul 2021-Oct 2021): Investigated over 150 pending insurance claims for a U.S.-based hospital by meticulously analyzing patient files and insurance records. Communicated effectively with U.S. insurance companies to identify root causes for delayed or denied payments, facilitating resolution. Provided detailed updates and claim statuses to assist claim processing teams in efficiently resolving outstanding issues. Ensured accurate documentation and timely escalation of claim-related concerns to accelerate reimbursement processes.
-
-            Education:
-            Master of Science in Business Analytics, University of Surrey (Sep 2023-Sep 2024): Core Modules: Data Mining & Text Analytics, Principles of Analytics, Statistics & Econometrics, Operational Analytics, ML/AI & Visualizations, Financial Modelling, Data & BPM (SAP), Finance & Investment Principles.
-
-            Postgraduate Program in Management (PGPM), Great Lakes Institute of Management (Nov 2021-Nov 2022): Key Modules (Analytics Focus): Data Visualization using Tableau, Business Analytics using Python, Machine Learning and its Applications.
-
-            Bachelor of Technology in Mechanical Engineering, B.S. Abdur Rahman Crescent Institute of Science and Technology, Chennai, India (Jun 2017-Jul 2021): Core Modules: Engineering Mechanics, Thermodynamics, Fluid Mechanics, Solid Mechanics, Heat & Mass Transfer, Machine Design, Manufacturing Technology, Mechanical Measurements, CAD/CAM.
-
-            Projects: Enhancing Sustainable Finance through GPU-Accelerated Value at Risk (VaR) Models in Central Banking, SAP Systems Project with Decathlon, Econometric Analysis using Stata, Data Mining on UK Road Accident Dataset using SAS Viya, Optimization of Rapid DNA Operation for Police Force, Customer Interest Prediction for Caravan Insurance Policy.
-
-            Certifications & Awards: Agile Project Management (Foundation & Practitioner) - In Progress, AWS Certified Cloud Practitioner - Expected 2025, iTEK Training and Project Completion Certification - 2024, Business English Certificate Preliminary - Cambridge Assessment English - 2024, MATLAB Onramp Course - 2020, Carbon Literacy Certificate - Sustainability Suite - 2025, iTEK Innovative Collaborator Award, iTEK One to Watch Award.
-        `;
-
-
-        // Job Matcher elements
-        const jobDescriptionInput = document.getElementById('jobDescriptionInput');
-        const calculateMatchBtn = document.getElementById('calculateMatchBtn');
-        const matchOutput = document.getElementById('matchOutput');
-        const matchPlaceholder = document.getElementById('matchPlaceholder');
-        const matchLoading = document.getElementById('matchLoading');
-        const matchScoreDisplay = document.getElementById('matchScore');
-        const matchExplanationDisplay = document.getElementById('matchExplanation');
-
-        // Skill Explainer elements
-        const skillExplanationOutput = document.getElementById('skillExplanationOutput');
-        const skillExplanationPlaceholder = document.getElementById('skillExplanationPlaceholder');
-        const skillExplanationLoading = document.getElementById('skillExplanationLoading');
-        const skillCategoryHeaders = document.querySelectorAll('.skill-category-header');
-
-        // Skill Explanations (Static Data) - Expanded for more skills
-        const skillExplanations = {
-            "Requirements Gathering": "The foundational process of collecting and documenting the precise needs and expectations of stakeholders for a project, ensuring all critical functionalities and constraints are understood.",
-            "Process Mapping": "Visualizing workflows and operational sequences to understand current states, identify bottlenecks, and design optimized future processes for improved efficiency and clarity.",
-            "Gap Analysis": "A systematic method for comparing actual performance or capabilities with desired performance to identify deficiencies and areas requiring improvement or development.",
-            "Feasibility Studies": "An evaluation of a proposed project or system to determine its practicality, viability, and potential for success, considering technical, economic, legal, and operational factors.",
-            "Business Process Modeling": "Representing business processes in a standardized graphical notation (e.g., BPMN) to facilitate analysis, communication, and improvement of organizational workflows.",
-            "User Stories": "Short, simple descriptions of a feature told from the perspective of the person who desires the new capability, used in Agile methodologies to define system functionality.",
-            "Stakeholder Management": "The process of identifying, analyzing, and engaging with all individuals or groups who have an interest or influence in a project, ensuring their needs and expectations are managed effectively.",
-            "Strategic Planning": "The organizational process of defining its strategy, or direction, and making decisions on allocating its resources to pursue this strategy, including its capital and people.",
-            "Market Research": "The systematic gathering, recording, and analysis of data about customers, competitors, and the market to inform business decisions and identify opportunities.",
-            "Customer Segmentation": "The practice of dividing a customer base into groups of individuals that are similar in specific ways relevant to marketing, service, or product development.",
-            "Financial Modeling": "The process of creating a summary of a company's expenses and earnings, typically in a spreadsheet, to forecast its future financial performance under different scenarios.",
-            "Python": "A high-level, versatile programming language widely used in data analysis, machine learning, web development, and automation due to its readability and extensive libraries.",
-            "R": "A programming language and free software environment specifically designed for statistical computing and graphics, popular in academia and research for data analysis and visualization.",
-            "SQL": "Structured Query Language, a standard language for managing and manipulating data in relational database management systems, essential for data extraction and transformation.",
-            "SAS Viya": "A cloud-enabled, in-memory analytics engine that provides a comprehensive platform for data management, advanced analytics, AI, and business intelligence.",
-            "Stata": "A comprehensive statistical software package used for data analysis, data management, and generating professional-quality graphics, particularly strong in econometrics and biostatistics.",
-            "Data Mining": "The process of discovering patterns, anomalies, and correlations within large datasets to predict outcomes and extract valuable insights for business decision-making.",
-            "Predictive Modeling": "Utilizing statistical and machine learning techniques to forecast future outcomes or probabilities based on historical data, enabling proactive decision-making.",
-            "Machine Learning": "A field of artificial intelligence that enables systems to learn from data, identify patterns, and make decisions with minimal human intervention, foundational for advanced analytics.",
-            "Deep Learning": "A subset of machine learning that uses artificial neural networks with multiple layers (deep neural networks) to learn complex patterns from large amounts of data, particularly effective for image and speech recognition.",
-            "NLP": "Natural Language Processing, a branch of AI that enables computers to understand, interpret, and generate human language, crucial for text analysis, sentiment analysis, and chatbots.",
-            "Computer Vision": "A field of artificial intelligence that trains computers to interpret and understand the visual world from digital images or videos, used in facial recognition, object detection, and autonomous systems.",
-            "Econometric Analysis": "The application of statistical methods to economic data to give empirical content to economic relations, test hypotheses, and forecast economic trends.",
-            "Statistical Modeling": "The use of mathematical equations to represent relationships between variables, allowing for the prediction of outcomes and understanding of data structures.",
-            "Feature Engineering": "The process of transforming raw data into features that better represent the underlying problem to predictive models, significantly impacting model performance.",
-            "A/B Testing": "A method of comparing two versions of a webpage, app feature, or marketing campaign against each other to determine which one performs better in achieving a specific goal.",
-            "Experiment Design": "The process of planning experiments to test hypotheses and draw valid conclusions, ensuring reliability and statistical significance of results.",
-            "Power BI": "A business intelligence tool from Microsoft that provides interactive visualizations and business intelligence capabilities with an easy-to-use interface for end-users.",
-            "Tableau": "A powerful data visualization tool widely used for creating interactive and shareable dashboards, enabling users to see and understand data quickly.",
-            "Dashboard Development": "The design and creation of interactive visual displays that track, analyze, and present key performance indicators (KPIs), metrics, and data points to monitor the health of a business area.",
-            "SAP ERP": "Enterprise Resource Planning software from SAP, a leading provider of business software solutions that manage business operations and customer relations.",
-            "Excel (Advanced)": "Proficiency in advanced Microsoft Excel functions, including complex formulas, pivot tables, macros (VBA), and data analysis tools for sophisticated data manipulation and reporting.",
-            "Java": "A high-level, class-based, object-oriented programming language widely used for enterprise-level applications, Android development, and large-scale systems.",
-            "Git": "A distributed version control system used for tracking changes in source code during software development, facilitating collaboration among multiple developers.",
-            "Neo4j": "A leading graph database management system, used for storing, querying, and visualizing highly connected data, ideal for relationship analysis.",
-            "MATLAB": "A proprietary multi-paradigm programming language and numerical computing environment, often used for mathematical modeling, simulation, and data analysis in engineering and scientific fields.",
-            "AWS (In Progress)": "Familiarity with Amazon Web Services, a comprehensive cloud computing platform, with ongoing efforts to achieve certification, indicating a commitment to cloud expertise.",
-            "Big Data Technologies (e.g., Spark, Hadoop)": "Knowledge of frameworks and tools designed to process and analyze extremely large datasets that cannot be handled by traditional data processing applications.",
-            "Data Warehousing": "The process of constructing and using a data warehouse, a system used for reporting and data analysis, and is a core component of business intelligence.",
-            "Agile Methodologies": "An iterative and incremental approach to project management and software development, emphasizing flexibility, collaboration, and continuous improvement.",
-            "Scrum": "A lightweight Agile framework for managing complex adaptive problems, while productively and creatively delivering products of the highest possible value.",
-            "Kanban": "An Agile method for managing and improving work in human systems, emphasizing continuous delivery and minimizing work-in-progress.",
-            "Project Planning": "The process of defining project goals, scope, tasks, resources, and timelines, and creating a detailed roadmap for project execution.",
-            "Budget Management": "The process of planning, tracking, and controlling project expenditures to ensure financial resources are used efficiently and within allocated limits.",
-            "Resource Allocation": "The process of assigning and scheduling resources (e.g., people, equipment, materials) to tasks and activities to maximize efficiency and achieve project objectives.",
-            "Gantt Charts": "A type of bar chart that illustrates a project schedule, showing the start and finish dates of the terminal elements and summary elements of a project.",
-            "Risk Assessment": "The process of identifying potential risks that could negatively affect a project or business, analyzing their likelihood and impact, and prioritizing them.",
-            "Risk Mitigation": "Developing and implementing strategies and actions to reduce the impact or likelihood of identified risks, ensuring project stability and success.",
-            "Compliance": "Adhering to rules, standards, laws, and regulations relevant to a specific industry or business operation.",
-            "Regulatory Frameworks": "Understanding the structured set of rules, laws, and administrative procedures that govern an industry or activity, ensuring legal and ethical operations.",
-            "Operational Risk": "The risk of loss resulting from inadequate or failed internal processes, people and systems, or from external events, focusing on day-to-day business activities.",
-            "Cybersecurity Risk": "The potential for loss or harm related to technical infrastructure, data breaches, system failures, or cyberattacks, requiring robust protective measures.",
-            "Stakeholder Engagement": "The process by which an organization involves people who may be affected by the decisions it makes or can influence the implementation of its decisions, fostering positive relationships.",
-            "Client Interaction": "The act of communicating and building relationships with clients to understand their needs, provide solutions, and ensure satisfaction and loyalty.",
-            "Presentations": "The skill of delivering information effectively and engagingly to an audience, often involving visual aids and strong verbal communication.",
-            "Report Writing": "The ability to create clear, concise, and informative documents that convey complex findings, analyses, and recommendations to various audiences.",
-            "Cross-functional Collaboration": "The ability to work effectively and cooperatively with teams and individuals from different departments, disciplines, or areas of expertise to achieve common goals."
+        // --- Level 2: Scroll-Based Motion ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
-        // Function to call Gemini API for Skill Explainer (now uses static data)
-        skillCategoryHeaders.forEach(header => { // Loop through headers
-            header.addEventListener('click', (event) => {
-                const targetId = header.dataset.target;
-                const skillListContent = document.getElementById(targetId);
-                
-                // Toggle visibility of the skill list content
-                skillListContent.classList.toggle('visible');
-                // Toggle 'expanded' class on the header for arrow rotation
-                header.classList.toggle('expanded');
+        const scollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Slight stagger inside sections based on DOM order if needed
+                    entry.target.classList.add('scroll-reveal');
+                    scollObserver.unobserve(entry.target);
+                }
             });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-hidden').forEach(el => {
+            scollObserver.observe(el);
         });
 
-        // Event listener for individual skill items to show explanations (now uses static data)
-        document.querySelectorAll('.skill-item').forEach(skillItem => {
-            skillItem.addEventListener('click', (event) => {
-                const skillName = event.target.textContent.trim();
-                const explanation = skillExplanations[skillName];
+        // --- Level 3: Depth and Parallax Motion ---
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
 
-                skillExplanationOutput.innerHTML = ''; // Clear previous output
-                skillExplanationPlaceholder.classList.add('hidden');
-                skillExplanationLoading.classList.add('hidden'); // Ensure loading is hidden
+                    // Slower parallax (BG, subtle elements)
+                    document.querySelectorAll('.parallax-slower').forEach(el => {
+                        el.style.transform = `translateY(${scrolled * 0.2}px)`;
+                    });
 
-                if (explanation) {
-                    skillExplanationOutput.textContent = explanation;
-                } else {
-                    skillExplanationOutput.textContent = `No detailed explanation available for "${skillName}".`;
+                    // Faster parallax (Foreground items if needed)
+                    document.querySelectorAll('.parallax-faster').forEach(el => {
+                        el.style.transform = `translateY(-${scrolled * 0.1}px)`;
+                    });
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // --- Interactive functionality ---
+
+        // Skill Toggle
+        function toggleSkillList(id) {
+            const content = document.getElementById(id);
+            const parent = content.previousElementSibling;
+            if (content.classList.contains('visible')) {
+                content.classList.remove('visible');
+                parent.classList.remove('expanded');
+            } else {
+                content.classList.add('visible');
+                parent.classList.add('expanded');
+            }
+        }
+
+        // --- NEW TOOLS ENGINE ---
+
+        // 1. Calculator Logic
+        const hoursSlider = document.getElementById('hoursSlider');
+        const rateSlider = document.getElementById('rateSlider');
+        const hoursDisplay = document.getElementById('hoursDisplay');
+        const rateDisplay = document.getElementById('rateDisplay');
+        const annualCostDisplay = document.getElementById('annualCost');
+
+        function calculateROI() {
+            const hours = parseInt(hoursSlider.value);
+            const rate = parseInt(rateSlider.value);
+            const cost = hours * rate * 52;
+
+            hoursDisplay.textContent = hours + " hrs";
+            rateDisplay.textContent = "$" + rate + " / hr";
+            annualCostDisplay.textContent = "$" + cost.toLocaleString();
+        }
+
+        hoursSlider.addEventListener('input', calculateROI);
+        rateSlider.addEventListener('input', calculateROI);
+
+
+
+        // 3. Number Counter Animation
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'));
+                    let current = 0;
+                    const increment = target / 60; // 60 frames
+
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            el.innerText = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            // Format
+                            el.innerText = target;
+                        }
+                    };
+                    updateCounter();
+                    statObserver.unobserve(el);
                 }
             });
         });
 
-        // Function to handle "Send Question" button click
-        sendQuestionBtn.addEventListener('click', () => {
-            const questionText = questionInput.value.trim();
-            if (questionText) {
-                const recipientEmail = 'benmishalben@gmail.com'; // Your Gmail ID
-                const subject = encodeURIComponent('Question from your Portfolio Website');
-                const body = encodeURIComponent(`Hello Ben,\n\nI have a question from your portfolio website:\n\n${questionText}\n\n`);
-                
-                const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
-                window.location.href = mailtoLink;
-                questionStatus.textContent = 'Opening your email client...';
-                questionInput.value = ''; // Clear the textarea
-            } else {
-                questionStatus.textContent = 'Please type your question before sending.';
+        document.querySelectorAll('.stat-number').forEach(el => statObserver.observe(el));
+
+        // 4. FAQ Accordion Logic
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('svg');
+
+                // Toggle active state
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Close all others
+                    document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                    document.querySelectorAll('.faq-btn svg').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // 5. Contact Form Let's Connect
+        document.getElementById('sendQuestionBtn').addEventListener('click', () => {
+            const q = document.getElementById('questionInput').value.trim();
+            if (q) {
+                const sub = encodeURIComponent("Inquiry from Website");
+                window.location.href = `mailto:benmishalben@gmail.com?subject=${sub}&body=${encodeURIComponent(q)}`;
             }
         });
+
     </script>
 </body>
+
 </html>
